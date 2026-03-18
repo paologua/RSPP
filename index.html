@@ -2,26 +2,23 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<title>RSPP.APP – Processi centrali</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RSPP.APP Mobile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
 <style>
 :root {
   --bg: #0d0d0d;
   --bg2: #141414;
   --bg3: #1c1c1c;
   --border: #2a2a2a;
-  --border2: #383838;
   --text: #e8e8e8;
   --text2: #888;
-  --text3: #555;
   --accent: #e8c547;
-  --accent2: #b8943a;
-  --ok: #4caf6e;
-  --warn: #e8a030;
   --danger: #d94f4f;
-  --info: #4a9edd;
-  --mono: ui-monospace, SF Mono, Cascadia Code, Consolas, "Courier New", monospace;
-  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --warn: #e8a030;
+  --ok: #4caf6e;
+  --mono: ui-monospace, SF Mono, Consolas;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,1335 +27,269 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--sans);
-  font-size: 13px;
-  min-height: 100vh;
+  font-size: 15px;
+  height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 /* HEADER */
 header {
+  padding: 12px 16px;
   background: var(--bg2);
   border-bottom: 1px solid var(--border);
-  padding: 0 16px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  height: 52px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-.logo {
   font-family: var(--mono);
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 16px;
   color: var(--accent);
   letter-spacing: 2px;
-  white-space: nowrap;
 }
-.logo span { color: var(--text3); }
 
-nav {
-  display: flex;
-  gap: 2px;
+/* CONTENT */
+#content {
   flex: 1;
-}
-.nav-btn {
-  background: none;
-  border: none;
-  color: var(--text2);
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 1px;
-  padding: 6px 10px;
-  cursor: pointer;
-  border-radius: 3px;
-  transition: all 0.15s;
-  text-transform: uppercase;
-}
-.nav-btn:hover { color: var(--text); background: var(--bg3); }
-.nav-btn.active {
-  color: var(--accent);
-  background: var(--bg3);
-  border-bottom: 2px solid var(--accent);
-  border-radius: 3px 3px 0 0;
+  overflow-y: auto;
+  padding: 16px;
 }
 
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.date-display {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--text3);
-}
-.btn-icon {
-  background: none;
-  border: 1px solid var(--border);
-  color: var(--text2);
-  padding: 4px 10px;
-  font-size: 11px;
-  font-family: var(--mono);
-  cursor: pointer;
-  border-radius: 3px;
-  transition: all 0.15s;
-}
-.btn-icon:hover { border-color: var(--accent); color: var(--accent); }
-
-/* LAYOUT */
-main {
-  flex: 1;
-  display: flex;
-  overflow: hidden;
-  height: calc(100vh - 52px);
-}
-.sidebar {
-  width: 220px;
+/* TABS BOTTOM */
+#tabs {
+  height: 60px;
   background: var(--bg2);
-  border-right: 1px solid var(--border);
-  overflow-y: auto;
-  flex-shrink: 0;
-}
-.content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px;
-  min-width: 0;
-}
-
-/* SIDEBAR */
-.sidebar-section { padding: 12px 0 4px; }
-.sidebar-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: var(--text3);
-  padding: 0 12px 6px;
-  text-transform: uppercase;
-}
-.sidebar-item {
-  padding: 6px 12px;
-  cursor: pointer;
+  border-top: 1px solid var(--border);
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  transition: background 0.1s;
-  border-left: 2px solid transparent;
 }
-.sidebar-item:hover { background: var(--bg3); }
-.sidebar-item-label {
-  font-size: 12px;
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.badge {
-  font-family: var(--mono);
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-.badge-ok { background: #1a3d26; color: var(--ok); }
-.badge-warn { background: #3d2a0a; color: var(--warn); }
-.badge-danger { background: #3d1212; color: var(--danger); }
-.badge-info { background: #0e2a3d; color: var(--info); }
-.badge-neutral { background: var(--bg3); color: var(--text2); }
 
-/* TABS */
-.tab-panel { display: none; }
-.tab-panel.active { display: block; }
+.tab-btn {
+  flex: 1;
+  text-align: center;
+  padding-top: 8px;
+  font-size: 11px;
+  color: var(--text2);
+  font-family: var(--mono);
+}
+.tab-btn.active {
+  color: var(--accent);
+}
 
 /* CARDS */
 .card {
   background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 4px;
+  padding: 14px;
+  border-radius: 6px;
   margin-bottom: 12px;
-}
-.card-header {
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  border: 1px solid var(--border);
 }
 .card-title {
   font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 600;
-}
-.card-body { padding: 12px 14px; }
-
-/* GRID */
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-
-/* STAT */
-.stat-box {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 12px;
-}
-.stat-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 1px;
-  color: var(--text3);
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-.stat-value {
-  font-family: var(--mono);
-  font-size: 22px;
-  font-weight: 600;
-}
-.stat-sub {
-  font-size: 11px;
-  color: var(--text2);
-  margin-top: 4px;
-}
-.stat-ok .stat-value { color: var(--ok); }
-.stat-warn .stat-value { color: var(--warn); }
-.stat-danger .stat-value { color: var(--danger); }
-
-/* TABLE */
-table { width: 100%; border-collapse: collapse; }
-th {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 1px;
-  color: var(--text3);
-  text-transform: uppercase;
-  padding: 6px 8px;
-  text-align: left;
-  border-bottom: 1px solid var(--border);
-}
-td {
-  padding: 8px 8px;
-  border-bottom: 1px solid var(--border);
-  font-size: 12px;
-}
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: var(--bg3); }
-
-/* FORM */
-.form-group { margin-bottom: 10px; }
-.form-label {
-  display: block;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 1px;
-  color: var(--text3);
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-input, select, textarea {
-  width: 100%;
-  background: var(--bg);
-  border: 1px solid var(--border2);
-  color: var(--text);
-  font-family: var(--sans);
   font-size: 13px;
-  padding: 7px 8px;
-  border-radius: 3px;
-  outline: none;
-}
-input:focus, select:focus, textarea:focus {
-  border-color: var(--accent);
-}
-textarea { min-height: 70px; resize: vertical; }
-
-/* BUTTONS */
-.btn {
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  padding: 7px 14px;
-  border-radius: 3px;
-  cursor: pointer;
-  border: none;
-  text-transform: uppercase;
-}
-.btn-primary { background: var(--accent); color: #000; }
-.btn-primary:hover { background: var(--accent2); }
-.btn-ghost {
-  background: none;
-  border: 1px solid var(--border2);
-  color: var(--text2);
-}
-.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-.btn-sm { padding: 4px 8px; font-size: 10px; }
-
-/* SECTION HEADER */
-.section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border);
-}
-.section-title {
-  font-family: var(--mono);
-  font-size: 14px;
-  font-weight: 600;
+  margin-bottom: 6px;
   color: var(--accent);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-.section-sub {
-  font-size: 11px;
-  color: var(--text2);
-  margin-top: 2px;
 }
 
-/* MODAL */
-.modal-overlay {
+/* BADGES */
+.badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: var(--mono);
+}
+.badge-ok { background: #1a3d26; color: var(--ok); }
+.badge-warn { background: #3d2a0a; color: var(--warn); }
+.badge-danger { background: #3d1212; color: var(--danger); }
+
+/* MODAL FULLSCREEN */
+.modal {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.7);
-  z-index: 100;
+  background: var(--bg);
   display: none;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  z-index: 100;
 }
-.modal-overlay.active { display: flex; }
-.modal {
-  background: var(--bg2);
-  border: 1px solid var(--border2);
-  border-radius: 4px;
-  width: 520px;
-  max-width: 95vw;
-  max-height: 85vh;
-  overflow-y: auto;
-}
+.modal.active { display: flex; }
+
 .modal-header {
-  padding: 12px 16px;
+  padding: 16px;
+  background: var(--bg2);
   border-bottom: 1px solid var(--border);
+  font-family: var(--mono);
+  color: var(--accent);
   display: flex;
-  align-items: center;
   justify-content: space-between;
 }
-.modal-title {
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--accent);
+.modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
 }
-.modal-body { padding: 14px 16px; }
 .modal-footer {
-  padding: 10px 16px;
+  padding: 16px;
   border-top: 1px solid var(--border);
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
 }
-.close-btn {
-  background: none;
+
+/* FORM */
+input, textarea {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+textarea { min-height: 80px; }
+
+/* BUTTON */
+.btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 14px;
+  text-align: center;
   border: none;
-  color: var(--text3);
-  font-size: 18px;
-  cursor: pointer;
 }
-.close-btn:hover { color: var(--text); }
+.btn-primary { background: var(--accent); color: #000; }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-ghost { background: none; border: 1px solid var(--border); color: var(--text2); }
 
-/* ALERT BAR */
-.alert-bar {
-  padding: 8px 12px;
-  border-radius: 3px;
-  font-size: 12px;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.alert-bar-danger { background: #3d1212; border-left: 3px solid var(--danger); color: #ff8080; }
-.alert-bar-warn { background: #3d2a0a; border-left: 3px solid var(--warn); color: #ffb84d; }
-.alert-bar-ok { background: #1a3d26; border-left: 3px solid var(--ok); color: #6dcc8a; }
-.alert-bar-info { background: #0e2a3d; border-left: 3px solid var(--info); color: #7dc4f0; }
-
-/* UTILS */
-.mt-8 { margin-top: 8px; }
-.mt-16 { margin-top: 16px; }
-.mb-8 { margin-bottom: 8px; }
-.text2 { color: var(--text2); }
-.mono { font-family: var(--mono); }
-
-@media (max-width: 900px) {
-  .sidebar { display: none; }
-  main { flex-direction: column; }
-}
 </style>
 </head>
+
 <body>
-<header>
-  <div class="logo">RSPP<span>|</span>APP</div>
-  <nav>
-    <button class="nav-btn active" data-tab="dashboard">Dashboard</button>
-    <button class="nav-btn" data-tab="processi">Processi</button>
-    <button class="nav-btn" data-tab="procedure">Procedure</button>
-    <button class="nav-btn" data-tab="rischi">Rischi</button>
-    <button class="nav-btn" data-tab="nc">NC</button>
-    <button class="nav-btn" data-tab="scadenze">Scadenze</button>
-    <button class="nav-btn" data-tab="formazione">Formazione</button>
-  </nav>
-  <div class="header-right">
-    <span class="date-display" id="currentDate"></span>
-    <button class="btn-icon" id="btnExport">EXPORT</button>
-    <button class="btn-icon" id="btnImport">IMPORT</button>
-    <input type="file" id="importFile" accept=".json" style="display:none">
-  </div>
-</header>
 
-<main>
-  <aside class="sidebar">
-    <div class="sidebar-section">
-      <div class="sidebar-label">Stato</div>
-      <div class="sidebar-item">
-        <span class="sidebar-item-label">NC aperte</span>
-        <span class="badge badge-danger" id="sb-nc-open">0</span>
-      </div>
-      <div class="sidebar-item">
-        <span class="sidebar-item-label">Scadenze 30 gg</span>
-        <span class="badge badge-warn" id="sb-scad-30">0</span>
-      </div>
-      <div class="sidebar-item">
-        <span class="sidebar-item-label">Formazione in scadenza</span>
-        <span class="badge badge-warn" id="sb-form-scad">0</span>
-      </div>
-      <div class="sidebar-item">
-        <span class="sidebar-item-label">Fasi senza copertura</span>
-        <span class="badge badge-info" id="sb-fasi-gap">0</span>
-      </div>
-    </div>
-  </aside>
+<header>RSPP.APP</header>
 
-  <div class="content">
-    <!-- DASHBOARD -->
-    <div class="tab-panel active" id="tab-dashboard">
-      <div class="section-header">
-        <div>
-          <div class="section-title">Dashboard</div>
-          <div class="section-sub">Quadro operativo RSPP · oggi</div>
-        </div>
-      </div>
+<div id="content"></div>
 
-      <div class="grid-4 mb-8">
-        <div class="stat-box stat-danger" id="stat-nc">
-          <div class="stat-label">NC aperte</div>
-          <div class="stat-value">0</div>
-          <div class="stat-sub">Non conformità con azione aperta</div>
-        </div>
-        <div class="stat-box stat-warn" id="stat-scad">
-          <div class="stat-label">Scadenze 30 gg</div>
-          <div class="stat-value">0</div>
-          <div class="stat-sub">Adempimenti entro 30 giorni</div>
-        </div>
-        <div class="stat-box stat-warn" id="stat-form">
-          <div class="stat-label">Formazione in scadenza</div>
-          <div class="stat-value">0</div>
-          <div class="stat-sub">Lavoratori da aggiornare</div>
-        </div>
-        <div class="stat-box stat-ok" id="stat-fasi">
-          <div class="stat-label">Fasi coperte</div>
-          <div class="stat-value">0%</div>
-          <div class="stat-sub">Fasi con procedura e rischio associati</div>
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <div>
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title">Criticità oggi</div>
-            </div>
-            <div class="card-body" id="dash-criticita"></div>
-          </div>
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title">NC aperte</div>
-            </div>
-            <div class="card-body" id="dash-nc"></div>
-          </div>
-        </div>
-        <div>
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title">Scadenze entro 30 giorni</div>
-            </div>
-            <div class="card-body" id="dash-scadenze"></div>
-          </div>
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title">Formazione in scadenza</div>
-            </div>
-            <div class="card-body" id="dash-formazione"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PROCESSI -->
-    <div class="tab-panel" id="tab-processi">
-      <div class="section-header">
-        <div>
-          <div class="section-title">Processi</div>
-          <div class="section-sub">Fasi · procedure collegate · rischi coperti</div>
-        </div>
-        <button class="btn btn-primary" id="btnNewFase">+ NUOVA FASE</button>
-      </div>
-      <div id="processi-list"></div>
-    </div>
-
-    <!-- PROCEDURE -->
-    <div class="tab-panel" id="tab-procedure">
-      <div class="section-header">
-        <div>
-          <div class="section-title">Procedure</div>
-          <div class="section-sub">Titolo · reparto · rischio · DPI</div>
-        </div>
-        <button class="btn btn-primary" id="btnNewProc">+ NUOVA PROCEDURA</button>
-      </div>
-      <div id="procedure-list"></div>
-    </div>
-
-    <!-- RISCHI -->
-    <div class="tab-panel" id="tab-rischi">
-      <div class="section-header">
-        <div>
-          <div class="section-title">Rischi</div>
-          <div class="section-sub">Agente · reparto · livello · misure</div>
-        </div>
-        <button class="btn btn-primary" id="btnNewRisk">+ NUOVO RISCHIO</button>
-      </div>
-      <div id="rischi-list"></div>
-    </div>
-
-    <!-- NC -->
-    <div class="tab-panel" id="tab-nc">
-      <div class="section-header">
-        <div>
-          <div class="section-title">Non conformità</div>
-          <div class="section-sub">Deviazioni · anomalie · azioni correttive</div>
-        </div>
-        <button class="btn btn-primary" id="btnNewNC">+ NUOVA NC</button>
-      </div>
-      <div id="nc-list"></div>
-    </div>
-
-    <!-- SCADENZE -->
-    <div class="tab-panel" id="tab-scadenze">
-      <div class="section-header">
-        <div>
-          <div class="section-title">Scadenze</div>
-          <div class="section-sub">Adempimenti · verifiche · sorveglianza</div>
-        </div>
-        <button class="btn btn-primary" id="btnNewScad">+ NUOVA SCADENZA</button>
-      </div>
-      <div id="scadenze-list"></div>
-    </div>
-
-    <!-- FORMAZIONE -->
-    <div class="tab-panel" id="tab-formazione">
-      <div class="section-header">
-        <div>
-          <div class="section-title">Formazione</div>
-          <div class="section-sub">Conformità per lavoratore e mansione</div>
-        </div>
-      </div>
-      <div id="formazione-list"></div>
-    </div>
-  </div>
-</main>
-
-<!-- MODALS -->
-
-<!-- FASE PROCESSO -->
-<div class="modal-overlay" id="modal-fase">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">FASE DI PROCESSO</div>
-      <button class="close-btn" data-close="modal-fase">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Codice fase</label>
-          <input id="fase-cod">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Ordine</label>
-          <input type="number" id="fase-ordine" min="1" value="1">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Nome fase</label>
-        <input id="fase-nome">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Reparto</label>
-        <input id="fase-reparto">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Procedura collegata (titolo)</label>
-        <input id="fase-proc">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Rischio principale (agente)</label>
-        <input id="fase-rischio">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Note operative</label>
-        <textarea id="fase-note"></textarea>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" data-close="modal-fase">Annulla</button>
-      <button class="btn btn-primary" id="save-fase">SALVA</button>
-    </div>
-  </div>
+<!-- TABS -->
+<div id="tabs">
+  <div class="tab-btn active" data-tab="processi">Processi</div>
+  <div class="tab-btn" data-tab="procedure">Procedure</div>
+  <div class="tab-btn" data-tab="rischi">Rischi</div>
+  <div class="tab-btn" data-tab="nc">NC</div>
+  <div class="tab-btn" data-tab="scadenze">Scadenze</div>
+  <div class="tab-btn" data-tab="formazione">Formazione</div>
 </div>
 
-<!-- PROCEDURA -->
-<div class="modal-overlay" id="modal-proc">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">PROCEDURA</div>
-      <button class="close-btn" data-close="modal-proc">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label">Titolo</label>
-        <input id="p-titolo">
-      </div>
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Reparto</label>
-          <input id="p-reparto">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Rischio</label>
-          <input id="p-rischio">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">DPI</label>
-        <input id="p-dpi">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Passi operativi (uno per riga)</label>
-        <textarea id="p-steps"></textarea>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" data-close="modal-proc">Annulla</button>
-      <button class="btn btn-primary" id="save-proc">SALVA</button>
-    </div>
-  </div>
-</div>
-
-<!-- RISCHIO -->
-<div class="modal-overlay" id="modal-risk">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">RISCHIO</div>
-      <button class="close-btn" data-close="modal-risk">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label">Agente / fattore</label>
-        <input id="r-agente">
-      </div>
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Reparto</label>
-          <input id="r-reparto">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Livello</label>
-          <select id="r-livello">
-            <option value="alto">Alto</option>
-            <option value="medio">Medio</option>
-            <option value="basso">Basso</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Misure</label>
-        <textarea id="r-misure"></textarea>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Procedura associata (titolo)</label>
-        <input id="r-proc">
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" data-close="modal-risk">Annulla</button>
-      <button class="btn btn-primary" id="save-risk">SALVA</button>
-    </div>
-  </div>
-</div>
-
-<!-- NC -->
-<div class="modal-overlay" id="modal-nc">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">NON CONFORMITÀ</div>
-      <button class="close-btn" data-close="modal-nc">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Data</label>
-          <input type="date" id="nc-data">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Reparto</label>
-          <input id="nc-reparto">
-        </div>
-      </div>
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Tipo</label>
-          <select id="nc-tipo">
-            <option>Deviazione procedurale</option>
-            <option>Anomalia processo</option>
-            <option>Near miss</option>
-            <option>DPI non utilizzati</option>
-            <option>Attrezzatura non conforme</option>
-            <option>Altro</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Gravità</label>
-          <select id="nc-grav">
-            <option value="alta">Alta</option>
-            <option value="media">Media</option>
-            <option value="bassa">Bassa</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Descrizione</label>
-        <textarea id="nc-desc"></textarea>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Azione correttiva</label>
-        <textarea id="nc-azione"></textarea>
-      </div>
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Responsabile azione</label>
-          <input id="nc-resp">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Scadenza azione</label>
-          <input type="date" id="nc-scad">
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" data-close="modal-nc">Annulla</button>
-      <button class="btn btn-primary" id="save-nc">SALVA</button>
-    </div>
-  </div>
-</div>
-
-<!-- SCADENZA -->
-<div class="modal-overlay" id="modal-scad">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">SCADENZA</div>
-      <button class="close-btn" data-close="modal-scad">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label">Titolo</label>
-        <input id="s-titolo">
-      </div>
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Data</label>
-          <input type="date" id="s-data">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Responsabile</label>
-          <input id="s-resp">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Categoria</label>
-        <select id="s-cat">
-          <option>Verifiche impianti</option>
-          <option>Attrezzature/macchine</option>
-          <option>Sorveglianza sanitaria</option>
-          <option>Formazione</option>
-          <option>Documentazione DVR</option>
-          <option>Riunione periodica</option>
-          <option>Antincendio</option>
-          <option>Altro</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Note</label>
-        <textarea id="s-note"></textarea>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" data-close="modal-scad">Annulla</button>
-      <button class="btn btn-primary" id="save-scad">SALVA</button>
-    </div>
-  </div>
-</div>
-
-<!-- SCRIPT -->
 <script>
+/* -------------------------
+   DATI DI ESEMPIO
+--------------------------*/
 const state = {
-  fasi: [],
-  procedure: [],
-  rischi: [],
-  nc: [],
-  scadenze: [],
-  formazione: []
+  processi: [
+    { id:1, nome:"Pesatura materie prime", reparto:"Miscelazione", proc:"Gestione solventi", rischio:"Xilene" },
+    { id:2, nome:"Miscelazione", reparto:"Miscelazione", proc:"Uso miscelatore", rischio:"Rumore" },
+    { id:3, nome:"Confezionamento", reparto:"Confezionamento", proc:"Linea automatica", rischio:"Schiacciamento" }
+  ],
+  procedure: [
+    { id:1, titolo:"Gestione solventi", reparto:"Miscelazione", rischio:"Chimico" },
+    { id:2, titolo:"Uso miscelatore", reparto:"Miscelazione", rischio:"Rumore" }
+  ],
+  rischi: [
+    { id:1, agente:"Xilene", livello:"alto", reparto:"Miscelazione" },
+    { id:2, agente:"Rumore", livello:"medio", reparto:"Miscelazione" }
+  ],
+  nc: [
+    { id:1, reparto:"Miscelazione", tipo:"DPI non utilizzati", desc:"Operatore senza occhiali", stato:"aperta" }
+  ],
+  scadenze: [
+    { id:1, titolo:"Verifica impianto terra", data:"2025-04-10" }
+  ],
+  formazione: [
+    { id:1, nome:"Mario Rossi", modulo:"Rischio chimico", scad:"2026-01-10" }
+  ]
 };
 
-function loadState() {
-  try {
-    const raw = localStorage.getItem('rspp_app_processi');
-    if (raw) {
-      const data = JSON.parse(raw);
-      ['fasi','procedure','rischi','nc','scadenze','formazione'].forEach(k => {
-        if (Array.isArray(data[k])) state[k] = data[k];
-      });
-    }
-  } catch(e) { console.error(e); }
-}
-
-function saveState() {
-  localStorage.setItem('rspp_app_processi', JSON.stringify(state));
-  renderAll();
-}
-
-function formatDate(d) {
-  if (!d) return '';
-  const dt = new Date(d);
-  if (isNaN(dt)) return d;
-  return dt.toISOString().slice(0,10);
-}
-function daysDiff(dateStr) {
-  if (!dateStr) return null;
-  const d = new Date(dateStr);
-  if (isNaN(d)) return null;
-  const today = new Date();
-  today.setHours(0,0,0,0);
-  d.setHours(0,0,0,0);
-  return Math.round((d - today) / (1000*60*60*24));
-}
-
-/* NAV */
-document.querySelectorAll('.nav-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const tab = btn.dataset.tab;
-    document.querySelectorAll('.tab-panel').forEach(p => {
-      p.classList.toggle('active', p.id === 'tab-' + tab);
-    });
-  });
-});
-
-/* DATE HEADER */
-document.getElementById('currentDate').textContent =
-  new Date().toLocaleDateString('it-IT', { weekday:'short', day:'2-digit', month:'2-digit', year:'numeric' });
-
-/* EXPORT / IMPORT */
-document.getElementById('btnExport').addEventListener('click', () => {
-  const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'rspp_app_processi.json';
-  a.click();
-  URL.revokeObjectURL(url);
-});
-document.getElementById('btnImport').addEventListener('click', () => {
-  document.getElementById('importFile').click();
-});
-document.getElementById('importFile').addEventListener('change', e => {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    try {
-      const data = JSON.parse(ev.target.result);
-      ['fasi','procedure','rischi','nc','scadenze','formazione'].forEach(k => {
-        if (Array.isArray(data[k])) state[k] = data[k];
-      });
-      saveState();
-    } catch(err) { alert('File non valido'); }
-  };
-  reader.readAsText(file);
-});
-
-/* MODALS */
-function openModal(id) { document.getElementById(id).classList.add('active'); }
-function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-document.querySelectorAll('.close-btn,[data-close]').forEach(el => {
-  el.addEventListener('click', () => {
-    const id = el.dataset.close;
-    if (id) closeModal(id);
-  });
-});
-
-/* NEW / SAVE FASE */
-document.getElementById('btnNewFase').addEventListener('click', () => {
-  document.getElementById('fase-cod').value = '';
-  document.getElementById('fase-ordine').value = 1;
-  document.getElementById('fase-nome').value = '';
-  document.getElementById('fase-reparto').value = '';
-  document.getElementById('fase-proc').value = '';
-  document.getElementById('fase-rischio').value = '';
-  document.getElementById('fase-note').value = '';
-  openModal('modal-fase');
-});
-document.getElementById('save-fase').addEventListener('click', () => {
-  const cod = document.getElementById('fase-cod').value.trim();
-  const ordine = parseInt(document.getElementById('fase-ordine').value || '1', 10);
-  const nome = document.getElementById('fase-nome').value.trim();
-  const reparto = document.getElementById('fase-reparto').value.trim();
-  const proc = document.getElementById('fase-proc').value.trim();
-  const rischio = document.getElementById('fase-rischio').value.trim();
-  const note = document.getElementById('fase-note').value.trim();
-  if (!nome) { alert('Nome fase obbligatorio'); return; }
-  state.fasi.push({
-    id: Date.now(),
-    cod,
-    ordine,
-    nome,
-    reparto,
-    proc,
-    rischio,
-    note
-  });
-  closeModal('modal-fase');
-  saveState();
-});
-
-/* NEW / SAVE PROCEDURA */
-document.getElementById('btnNewProc').addEventListener('click', () => {
-  document.getElementById('p-titolo').value = '';
-  document.getElementById('p-reparto').value = '';
-  document.getElementById('p-rischio').value = '';
-  document.getElementById('p-dpi').value = '';
-  document.getElementById('p-steps').value = '';
-  openModal('modal-proc');
-});
-document.getElementById('save-proc').addEventListener('click', () => {
-  const titolo = document.getElementById('p-titolo').value.trim();
-  const reparto = document.getElementById('p-reparto').value.trim();
-  const rischio = document.getElementById('p-rischio').value.trim();
-  const dpi = document.getElementById('p-dpi').value.trim();
-  const steps = document.getElementById('p-steps').value.trim();
-  if (!titolo) { alert('Titolo obbligatorio'); return; }
-  state.procedure.push({
-    id: Date.now(),
-    titolo,
-    reparto,
-    rischio,
-    dpi,
-    steps
-  });
-  closeModal('modal-proc');
-  saveState();
-});
-
-/* NEW / SAVE RISCHIO */
-document.getElementById('btnNewRisk').addEventListener('click', () => {
-  document.getElementById('r-agente').value = '';
-  document.getElementById('r-reparto').value = '';
-  document.getElementById('r-livello').value = 'alto';
-  document.getElementById('r-misure').value = '';
-  document.getElementById('r-proc').value = '';
-  openModal('modal-risk');
-});
-document.getElementById('save-risk').addEventListener('click', () => {
-  const agente = document.getElementById('r-agente').value.trim();
-  const reparto = document.getElementById('r-reparto').value.trim();
-  const livello = document.getElementById('r-livello').value;
-  const misure = document.getElementById('r-misure').value.trim();
-  const proc = document.getElementById('r-proc').value.trim();
-  if (!agente) { alert('Agente obbligatorio'); return; }
-  state.rischi.push({
-    id: Date.now(),
-    agente,
-    reparto,
-    livello,
-    misure,
-    proc
-  });
-  closeModal('modal-risk');
-  saveState();
-});
-
-/* NEW / SAVE NC */
-document.getElementById('btnNewNC').addEventListener('click', () => {
-  document.getElementById('nc-data').value = formatDate(new Date());
-  document.getElementById('nc-reparto').value = '';
-  document.getElementById('nc-tipo').value = 'Deviazione procedurale';
-  document.getElementById('nc-grav').value = 'media';
-  document.getElementById('nc-desc').value = '';
-  document.getElementById('nc-azione').value = '';
-  document.getElementById('nc-resp').value = '';
-  document.getElementById('nc-scad').value = '';
-  openModal('modal-nc');
-});
-document.getElementById('save-nc').addEventListener('click', () => {
-  const data = document.getElementById('nc-data').value;
-  const reparto = document.getElementById('nc-reparto').value.trim();
-  const tipo = document.getElementById('nc-tipo').value;
-  const grav = document.getElementById('nc-grav').value;
-  const desc = document.getElementById('nc-desc').value.trim();
-  const azione = document.getElementById('nc-azione').value.trim();
-  const resp = document.getElementById('nc-resp').value.trim();
-  const scad = document.getElementById('nc-scad').value;
-  if (!reparto || !desc) { alert('Reparto e descrizione obbligatori'); return; }
-  state.nc.push({
-    id: Date.now(),
-    data,
-    reparto,
-    tipo,
-    grav,
-    desc,
-    azione,
-    resp,
-    scad,
-    stato: 'aperta'
-  });
-  closeModal('modal-nc');
-  saveState();
-});
-
-/* NEW / SAVE SCADENZA */
-document.getElementById('btnNewScad').addEventListener('click', () => {
-  document.getElementById('s-titolo').value = '';
-  document.getElementById('s-data').value = '';
-  document.getElementById('s-resp').value = '';
-  document.getElementById('s-cat').value = 'Verifiche impianti';
-  document.getElementById('s-note').value = '';
-  openModal('modal-scad');
-});
-document.getElementById('save-scad').addEventListener('click', () => {
-  const titolo = document.getElementById('s-titolo').value.trim();
-  const data = document.getElementById('s-data').value;
-  const resp = document.getElementById('s-resp').value.trim();
-  const cat = document.getElementById('s-cat').value;
-  const note = document.getElementById('s-note').value.trim();
-  if (!titolo || !data) { alert('Titolo e data obbligatori'); return; }
-  state.scadenze.push({
-    id: Date.now(),
-    titolo,
-    data,
-    resp,
-    cat,
-    note
-  });
-  closeModal('modal-scad');
-  saveState();
-});
-
-/* RENDER */
-
-function renderDashboard() {
-  const ncOpen = state.nc.filter(n => n.stato === 'aperta');
-  const scad30 = state.scadenze.filter(s => {
-    const d = daysDiff(s.data);
-    return d !== null && d >= 0 && d <= 30;
-  });
-  const formScad = state.formazione.filter(f => {
-    const d = daysDiff(f.scad);
-    return d !== null && d >= 0 && d <= 60;
-  });
-
-  // fasi coperte: hanno sia procedura che rischio valorizzati
-  const fasiTot = state.fasi.length;
-  const fasiCop = state.fasi.filter(f => f.proc && f.rischio).length;
-  const percFasi = fasiTot ? Math.round(100 * fasiCop / fasiTot) : 0;
-
-  document.querySelector('#stat-nc .stat-value').textContent = ncOpen.length;
-  document.querySelector('#stat-scad .stat-value').textContent = scad30.length;
-  document.querySelector('#stat-form .stat-value').textContent = formScad.length;
-  document.querySelector('#stat-fasi .stat-value').textContent = percFasi + '%';
-
-  const crit = [];
-  if (ncOpen.length) crit.push(`<div class="alert-bar alert-bar-danger">${ncOpen.length} NC aperte</div>`);
-  if (scad30.length) crit.push(`<div class="alert-bar alert-bar-warn">${scad30.length} scadenze entro 30 giorni</div>`);
-  if (formScad.length) crit.push(`<div class="alert-bar alert-bar-warn">${formScad.length} lavoratori con formazione in scadenza</div>`);
-  if (fasiTot && fasiTot !== fasiCop) crit.push(`<div class="alert-bar alert-bar-info">${fasiTot - fasiCop} fasi senza copertura completa</div>`);
-  if (!crit.length) crit.push(`<div class="alert-bar alert-bar-ok">Nessuna criticità rilevante oggi</div>`);
-  document.getElementById('dash-criticita').innerHTML = crit.join('');
-
-  const ncHtml = ncOpen.slice(0,5).map(n => {
-    const d = daysDiff(n.scad);
-    let tag = '';
-    if (d !== null) {
-      if (d < 0) tag = `<span class="badge badge-danger">Scaduta</span>`;
-      else if (d <= 7) tag = `<span class="badge badge-warn">${d} gg</span>`;
-      else tag = `<span class="badge badge-neutral">${d} gg</span>`;
-    }
-    return `<div class="mb-8">
-      <div class="mono">${formatDate(n.data)} · ${n.reparto}</div>
-      <div>${n.tipo} – ${n.desc}</div>
-      <div class="mt-8">${tag}</div>
-    </div>`;
-  }).join('') || '<span class="text2">Nessuna NC aperta</span>';
-  document.getElementById('dash-nc').innerHTML = ncHtml;
-
-  const scHtml = scad30.slice(0,5).map(s => {
-    const d = daysDiff(s.data);
-    let tag = '';
-    if (d !== null) {
-      if (d < 0) tag = `<span class="badge badge-danger">Scaduta</span>`;
-      else if (d <= 7) tag = `<span class="badge badge-warn">${d} gg</span>`;
-      else tag = `<span class="badge badge-neutral">${d} gg</span>`;
-    }
-    return `<div class="mb-8">
-      <div class="mono">${formatDate(s.data)} · ${s.cat}</div>
-      <div>${s.titolo}</div>
-      <div class="mt-8">${tag}</div>
-    </div>`;
-  }).join('') || '<span class="text2">Nessuna scadenza entro 30 giorni</span>';
-  document.getElementById('dash-scadenze').innerHTML = scHtml;
-
-  const fHtml = formScad.slice(0,5).map(f => {
-    const d = daysDiff(f.scad);
-    let tag = '';
-    if (d !== null) {
-      if (d < 0) tag = `<span class="badge badge-danger">Scaduta</span>`;
-      else if (d <= 30) tag = `<span class="badge badge-warn">${d} gg</span>`;
-      else tag = `<span class="badge badge-neutral">${d} gg</span>`;
-    }
-    return `<div class="mb-8">
-      <div class="mono">${f.nome} · ${f.mansione || 'mansione n/d'}</div>
-      <div>${f.modulo}</div>
-      <div class="mt-8">${tag}</div>
-    </div>`;
-  }).join('') || '<span class="text2">Nessuna formazione in scadenza</span>';
-  document.getElementById('dash-formazione').innerHTML = fHtml;
-}
-
+/* -------------------------
+   RENDER FUNZIONI
+--------------------------*/
 function renderProcessi() {
-  const container = document.getElementById('processi-list');
-  if (!state.fasi.length) {
-    container.innerHTML = '<span class="text2">Nessuna fase di processo registrata</span>';
-    return;
-  }
-  let html = '<table><thead><tr>' +
-    '<th>Ordine</th><th>Codice</th><th>Fase</th><th>Reparto</th><th>Procedura</th><th>Rischio</th><th>Copertura</th>' +
-    '</tr></thead><tbody>';
-  state.fasi.slice().sort((a,b) => (a.ordine||0) - (b.ordine||0)).forEach(f => {
-    const hasProc = !!(f.proc && f.proc.trim());
-    const hasRisk = !!(f.rischio && f.rischio.trim());
-    let badge = 'badge-neutral';
-    let label = 'Parziale';
-    if (hasProc && hasRisk) { badge = 'badge-ok'; label = 'Completa'; }
-    else if (!hasProc && !hasRisk) { badge = 'badge-danger'; label = 'Assente'; }
-    else { badge = 'badge-warn'; label = 'Parziale'; }
-    html += `<tr>
-      <td>${f.ordine || ''}</td>
-      <td>${f.cod || ''}</td>
-      <td>${f.nome}</td>
-      <td>${f.reparto || ''}</td>
-      <td>${f.proc || '<span class="text2">n/d</span>'}</td>
-      <td>${f.rischio || '<span class="text2">n/d</span>'}</td>
-      <td><span class="badge ${badge}">${label}</span></td>
-    </tr>`;
-  });
-  html += '</tbody></table>';
-  container.innerHTML = html;
+  return state.processi.map(p => `
+    <div class="card">
+      <div class="card-title">${p.nome}</div>
+      <div>Reparto: ${p.reparto}</div>
+      <div>Procedura: <b>${p.proc}</b></div>
+      <div>Rischio: <b>${p.rischio}</b></div>
+    </div>
+  `).join("");
 }
 
 function renderProcedure() {
-  const container = document.getElementById('procedure-list');
-  if (!state.procedure.length) {
-    container.innerHTML = '<span class="text2">Nessuna procedura registrata</span>';
-    return;
-  }
-  let html = '<table><thead><tr>' +
-    '<th>Titolo</th><th>Reparto</th><th>Rischio</th><th>DPI</th>' +
-    '</tr></thead><tbody>';
-  state.procedure.forEach(p => {
-    html += `<tr>
-      <td>${p.titolo}</td>
-      <td>${p.reparto || ''}</td>
-      <td>${p.rischio || ''}</td>
-      <td>${p.dpi || ''}</td>
-    </tr>`;
-  });
-  html += '</tbody></table>';
-  container.innerHTML = html;
+  return state.procedure.map(p => `
+    <div class="card">
+      <div class="card-title">${p.titolo}</div>
+      <div>Reparto: ${p.reparto}</div>
+      <div>Rischio: ${p.rischio}</div>
+    </div>
+  `).join("");
 }
 
 function renderRischi() {
-  const container = document.getElementById('rischi-list');
-  if (!state.rischi.length) {
-    container.innerHTML = '<span class="text2">Nessun rischio registrato</span>';
-    return;
-  }
-  let html = '<table><thead><tr>' +
-    '<th>Agente</th><th>Reparto</th><th>Livello</th><th>Misure</th><th>Procedura</th>' +
-    '</tr></thead><tbody>';
-  state.rischi.forEach(r => {
-    let badge = 'badge-neutral';
-    if (r.livello === 'alto') badge = 'badge-danger';
-    if (r.livello === 'medio') badge = 'badge-warn';
-    if (r.livello === 'basso') badge = 'badge-ok';
-    html += `<tr>
-      <td>${r.agente}</td>
-      <td>${r.reparto || ''}</td>
-      <td><span class="badge ${badge}">${r.livello}</span></td>
-      <td>${r.misure || ''}</td>
-      <td>${r.proc || '<span class="text2">nessuna</span>'}</td>
-    </tr>`;
-  });
-  html += '</tbody></table>';
-  container.innerHTML = html;
+  return state.rischi.map(r => `
+    <div class="card">
+      <div class="card-title">${r.agente}</div>
+      <div>Reparto: ${r.reparto}</div>
+      <div>Livello: <span class="badge badge-${r.livello === "alto" ? "danger" : r.livello === "medio" ? "warn" : "ok"}">${r.livello}</span></div>
+    </div>
+  `).join("");
 }
 
 function renderNC() {
-  const container = document.getElementById('nc-list');
-  if (!state.nc.length) {
-    container.innerHTML = '<span class="text2">Nessuna NC registrata</span>';
-    return;
-  }
-  let html = '<table><thead><tr>' +
-    '<th>Data</th><th>Reparto</th><th>Tipo</th><th>Gravità</th><th>Scadenza</th><th>Stato</th>' +
-    '</tr></thead><tbody>';
-  state.nc.slice().sort((a,b) => (a.data || '').localeCompare(b.data || '')).forEach(n => {
-    const d = daysDiff(n.scad);
-    let stato = n.stato || 'aperta';
-    let badge = 'badge-neutral';
-    if (stato === 'aperta') badge = 'badge-danger';
-    if (stato === 'chiusa') badge = 'badge-ok';
-    let scadTag = '';
-    if (d !== null) {
-      if (d < 0) scadTag = `<span class="badge badge-danger">Scaduta</span>`;
-      else if (d <= 7) scadTag = `<span class="badge badge-warn">${d} gg</span>`;
-      else scadTag = `<span class="badge badge-neutral">${d} gg</span>`;
-    }
-    html += `<tr>
-      <td>${formatDate(n.data)}</td>
-      <td>${n.reparto}</td>
-      <td>${n.tipo}</td>
-      <td>${n.grav}</td>
-      <td>${formatDate(n.scad)} ${scadTag}</td>
-      <td><span class="badge ${badge}">${stato}</span></td>
-    </tr>`;
-  });
-  html += '</tbody></table>';
-  container.innerHTML = html;
+  return state.nc.map(n => `
+    <div class="card">
+      <div class="card-title">${n.tipo}</div>
+      <div>${n.desc}</div>
+      <div class="badge badge-danger">${n.stato}</div>
+    </div>
+  `).join("");
 }
 
 function renderScadenze() {
-  const container = document.getElementById('scadenze-list');
-  if (!state.scadenze.length) {
-    container.innerHTML = '<span class="text2">Nessuna scadenza registrata</span>';
-    return;
-  }
-  let html = '<table><thead><tr>' +
-    '<th>Data</th><th>Titolo</th><th>Categoria</th><th>Responsabile</th><th>Stato</th>' +
-    '</tr></thead><tbody>';
-  state.scadenze.slice().sort((a,b) => (a.data || '').localeCompare(b.data || '')).forEach(s => {
-    const d = daysDiff(s.data);
-    let badge = 'badge-neutral';
-    let label = '';
-    if (d !== null) {
-      if (d < 0) { badge = 'badge-danger'; label = 'Scaduta'; }
-      else if (d <= 7) { badge = 'badge-warn'; label = d + ' gg'; }
-      else { badge = 'badge-neutral'; label = d + ' gg'; }
-    }
-    html += `<tr>
-      <td>${formatDate(s.data)}</td>
-      <td>${s.titolo}</td>
-      <td>${s.cat}</td>
-      <td>${s.resp || ''}</td>
-      <td><span class="badge ${badge}">${label}</span></td>
-    </tr>`;
-  });
-  html += '</tbody></table>';
-  container.innerHTML = html;
+  return state.scadenze.map(s => `
+    <div class="card">
+      <div class="card-title">${s.titolo}</div>
+      <div>Data: ${s.data}</div>
+    </div>
+  `).join("");
 }
 
 function renderFormazione() {
-  const container = document.getElementById('formazione-list');
-  if (!state.formazione.length) {
-    container.innerHTML = '<span class="text2">Nessuna formazione registrata</span>';
-    return;
-  }
-  let html = '<table><thead><tr>' +
-    '<th>Lavoratore</th><th>Mansione</th><th>Modulo</th><th>Data</th><th>Scadenza</th>' +
-    '</tr></thead><tbody>';
-  state.formazione.forEach(f => {
-    const d = daysDiff(f.scad);
-    let badge = 'badge-neutral';
-    let label = '';
-    if (d !== null) {
-      if (d < 0) { badge = 'badge-danger'; label = 'Scaduta'; }
-      else if (d <= 60) { badge = 'badge-warn'; label = d + ' gg'; }
-      else { badge = 'badge-neutral'; label = d + ' gg'; }
-    }
-    html += `<tr>
-      <td>${f.nome}</td>
-      <td>${f.mansione || ''}</td>
-      <td>${f.modulo}</td>
-      <td>${formatDate(f.data)}</td>
-      <td>${formatDate(f.scad)} <span class="badge ${badge}">${label}</span></td>
-    </tr>`;
+  return state.formazione.map(f => `
+    <div class="card">
+      <div class="card-title">${f.nome}</div>
+      <div>Modulo: ${f.modulo}</div>
+      <div>Scadenza: ${f.scad}</div>
+    </div>
+  `).join("");
+}
+
+/* -------------------------
+   NAVIGAZIONE
+--------------------------*/
+function showTab(tab) {
+  const content = document.getElementById("content");
+
+  if (tab === "processi") content.innerHTML = renderProcessi();
+  if (tab === "procedure") content.innerHTML = renderProcedure();
+  if (tab === "rischi") content.innerHTML = renderRischi();
+  if (tab === "nc") content.innerHTML = renderNC();
+  if (tab === "scadenze") content.innerHTML = renderScadenze();
+  if (tab === "formazione") content.innerHTML = renderFormazione();
+}
+
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    showTab(btn.dataset.tab);
   });
-  html += '</tbody></table>';
-  container.innerHTML = html;
-}
-
-function renderSidebar() {
-  const ncOpen = state.nc.filter(n => n.stato === 'aperta').length;
-  const scad30 = state.scadenze.filter(s => {
-    const d = daysDiff(s.data);
-    return d !== null && d >= 0 && d <= 30;
-  }).length;
-  const formScad = state.formazione.filter(f => {
-    const d = daysDiff(f.scad);
-    return d !== null && d >= 0 && d <= 60;
-  }).length;
-  const fasiGap = state.fasi.filter(f => !(f.proc && f.rischio)).length;
-
-  document.getElementById('sb-nc-open').textContent = ncOpen;
-  document.getElementById('sb-scad-30').textContent = scad30;
-  document.getElementById('sb-form-scad').textContent = formScad;
-  document.getElementById('sb-fasi-gap').textContent = fasiGap;
-}
-
-function renderAll() {
-  renderDashboard();
-  renderProcessi();
-  renderProcedure();
-  renderRischi();
-  renderNC();
-  renderScadenze();
-  renderFormazione();
-  renderSidebar();
-}
+});
 
 /* INIT */
-loadState();
-renderAll();
+showTab("processi");
 </script>
+
 </body>
 </html>
