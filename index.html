@@ -6,28 +6,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SPP|MANAGER</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+  :root {
+    --bg: #0d0d0d;
+    --bg2: #141414;
+    --bg3: #1c1c1c;
+    --border: #2a2a2a;
+    --border2: #383838;
+    --text: #e8e8e8;
+    --text2: #888;
+    --text3: #555;
+    --accent: #e8c547;
+    --accent2: #b8943a;
+    --ok: #4caf6e;
+    --warn: #e8a030;
+    --danger: #d94f4f;
+    --info: #4a9edd;
+    --mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
 
-:root {
-–bg: #0d0d0d;
-–bg2: #141414;
-–bg3: #1c1c1c;
-–border: #2a2a2a;
-–border2: #383838;
-–text: #e8e8e8;
-–text2: #888;
-–text3: #555;
-–accent: #e8c547;
-–accent2: #b8943a;
-–ok: #4caf6e;
-–warn: #e8a030;
-–danger: #d94f4f;
-–info: #4a9edd;
-–mono: ‘IBM Plex Mono’, monospace;
-–sans: ‘IBM Plex Sans’, sans-serif;
-}
-
-- { box-sizing: border-box; margin: 0; padding: 0; }
+- { box-sizing: border-box; margin: 0; padding: 0; overflow-wrap: break-word; word-break: break-word; }
 
 body {
 background: var(–bg);
@@ -135,6 +133,7 @@ flex-shrink: 0;
 flex: 1;
 overflow-y: auto;
 padding: 24px;
+min-width: 0;
 }
 
 /* TABS */
@@ -215,6 +214,7 @@ font-family: var(–mono);
 font-size: 12px;
 font-weight: 600;
 flex: 1;
+min-width: 0;
 }
 
 .card-body {
@@ -602,13 +602,13 @@ color: var(–text2);
 <header>
   <div class="logo">SPP<span>|</span>MANAGER</div>
   <nav>
-    <button class="nav-btn active" onclick="switchTab('dashboard')">Dashboard</button>
-    <button class="nav-btn" onclick="switchTab('processo')">Processo</button>
-    <button class="nav-btn" onclick="switchTab('procedure')">Procedure</button>
-    <button class="nav-btn" onclick="switchTab('rischi')">Rischi</button>
-    <button class="nav-btn" onclick="switchTab('formazione')">Formazione</button>
-    <button class="nav-btn" onclick="switchTab('scadenze')">Scadenze</button>
-    <button class="nav-btn" onclick="switchTab('nc')">Non Conformità</button>
+    <button class="nav-btn active" onclick="switchTab('dashboard', this)">Dashboard</button>
+    <button class="nav-btn" onclick="switchTab('processo', this)">Processo</button>
+    <button class="nav-btn" onclick="switchTab('procedure', this)">Procedure</button>
+    <button class="nav-btn" onclick="switchTab('rischi', this)">Rischi</button>
+    <button class="nav-btn" onclick="switchTab('formazione', this)">Formazione</button>
+    <button class="nav-btn" onclick="switchTab('scadenze', this)">Scadenze</button>
+    <button class="nav-btn" onclick="switchTab('nc', this)">Non Conformità</button>
   </nav>
   <div class="header-right">
     <span class="date-display" id="currentDate"></span>
@@ -1396,16 +1396,11 @@ function scadenzaStatus(data) {
 // ============================================================
 // NAV
 // ============================================================
-function switchTab(tab) {
+function switchTab(tab, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
-  document.querySelectorAll('.nav-btn').forEach(b => {
-    if (b.textContent.toLowerCase().includes(tab === 'nc' ? 'non' : tab.slice(0,4))) b.classList.add('active');
-  });
-  // fix active button
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+  if (btn) btn.classList.add('active');
   renderSidebar(tab);
   renderTab(tab);
 }
@@ -1822,6 +1817,10 @@ function switchToTab(tab) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
+  // attiva il bottone nav corrispondente
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + tab + "'")) b.classList.add('active');
+  });
   renderSidebar(tab);
 }
 
