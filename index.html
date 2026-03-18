@@ -1,1114 +1,723 @@
 <!DOCTYPE html>
-
 <html lang="it">
 <head>
 <meta charset="UTF-8">
+<title>RSPP.APP v1</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SPP|MANAGER</title>
 <style>
-  :root {
-    --bg: #0d0d0d;
-    --bg2: #141414;
-    --bg3: #1c1c1c;
-    --border: #2a2a2a;
-    --border2: #383838;
-    --text: #e8e8e8;
-    --text2: #888;
-    --text3: #555;
-    --accent: #e8c547;
-    --accent2: #b8943a;
-    --ok: #4caf6e;
-    --warn: #e8a030;
-    --danger: #d94f4f;
-    --info: #4a9edd;
-    --mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'Consolas', 'Courier New', monospace;
-    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  }
+:root {
+  --bg: #0d0d0d;
+  --bg2: #141414;
+  --bg3: #1c1c1c;
+  --border: #2a2a2a;
+  --border2: #383838;
+  --text: #e8e8e8;
+  --text2: #888;
+  --text3: #555;
+  --accent: #e8c547;
+  --accent2: #b8943a;
+  --ok: #4caf6e;
+  --warn: #e8a030;
+  --danger: #d94f4f;
+  --info: #4a9edd;
+  --mono: ui-monospace, SF Mono, Cascadia Code, Consolas, "Courier New", monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+}
 
-- { box-sizing: border-box; margin: 0; padding: 0; overflow-wrap: break-word; word-break: break-word; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-background: var(–bg);
-color: var(–text);
-font-family: var(–sans);
-font-size: 13px;
-min-height: 100vh;
-display: flex;
-flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 13px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* HEADER */
 header {
-background: var(–bg2);
-border-bottom: 1px solid var(–border);
-padding: 0 24px;
-display: flex;
-align-items: center;
-gap: 32px;
-height: 52px;
-position: sticky;
-top: 0;
-z-index: 100;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 52px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
-
 .logo {
-font-family: var(–mono);
-font-size: 15px;
-font-weight: 600;
-color: var(–accent);
-letter-spacing: 2px;
-white-space: nowrap;
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 2px;
+  white-space: nowrap;
 }
-
-.logo span { color: var(–text3); }
+.logo span { color: var(--text3); }
 
 nav {
-display: flex;
-gap: 2px;
-flex: 1;
+  display: flex;
+  gap: 2px;
+  flex: 1;
 }
-
 .nav-btn {
-background: none;
-border: none;
-color: var(–text2);
-font-family: var(–mono);
-font-size: 11px;
-font-weight: 500;
-letter-spacing: 1px;
-padding: 6px 14px;
-cursor: pointer;
-border-radius: 3px;
-transition: all 0.15s;
-text-transform: uppercase;
+  background: none;
+  border: none;
+  color: var(--text2);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.15s;
+  text-transform: uppercase;
 }
-
-.nav-btn:hover { color: var(–text); background: var(–bg3); }
-.nav-btn.active { color: var(–accent); background: var(–bg3); border-bottom: 2px solid var(–accent); border-radius: 3px 3px 0 0; }
+.nav-btn:hover { color: var(--text); background: var(--bg3); }
+.nav-btn.active {
+  color: var(--accent);
+  background: var(--bg3);
+  border-bottom: 2px solid var(--accent);
+  border-radius: 3px 3px 0 0;
+}
 
 .header-right {
-display: flex;
-align-items: center;
-gap: 12px;
-margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-
 .date-display {
-font-family: var(–mono);
-font-size: 11px;
-color: var(–text3);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
 }
-
 .btn-icon {
-background: none;
-border: 1px solid var(–border);
-color: var(–text2);
-padding: 5px 10px;
-font-size: 11px;
-font-family: var(–mono);
-cursor: pointer;
-border-radius: 3px;
-transition: all 0.15s;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  padding: 4px 10px;
+  font-size: 11px;
+  font-family: var(--mono);
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.15s;
 }
-
-.btn-icon:hover { border-color: var(–accent); color: var(–accent); }
+.btn-icon:hover { border-color: var(--accent); color: var(--accent); }
 
 /* LAYOUT */
 main {
-flex: 1;
-display: flex;
-overflow: hidden;
-height: calc(100vh - 52px);
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  height: calc(100vh - 52px);
 }
-
 .sidebar {
-width: 220px;
-background: var(–bg2);
-border-right: 1px solid var(–border);
-overflow-y: auto;
-flex-shrink: 0;
+  width: 220px;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  min-width: 0;
 }
 
-.content {
-flex: 1;
-overflow-y: auto;
-padding: 24px;
-min-width: 0;
+/* SIDEBAR */
+.sidebar-section { padding: 12px 0 4px; }
+.sidebar-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text3);
+  padding: 0 12px 6px;
+  text-transform: uppercase;
 }
+.sidebar-item {
+  padding: 6px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  transition: background 0.1s;
+  border-left: 2px solid transparent;
+}
+.sidebar-item:hover { background: var(--bg3); }
+.sidebar-item.active {
+  background: var(--bg3);
+  border-left-color: var(--accent);
+  color: var(--accent);
+}
+.sidebar-item-label {
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.badge-ok { background: #1a3d26; color: var(--ok); }
+.badge-warn { background: #3d2a0a; color: var(--warn); }
+.badge-danger { background: #3d1212; color: var(--danger); }
+.badge-info { background: #0e2a3d; color: var(--info); }
+.badge-neutral { background: var(--bg3); color: var(--text2); }
 
 /* TABS */
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
 
-/* SIDEBAR */
-.sidebar-section {
-padding: 16px 0 8px;
-}
-
-.sidebar-label {
-font-family: var(–mono);
-font-size: 10px;
-letter-spacing: 2px;
-color: var(–text3);
-padding: 0 16px 8px;
-text-transform: uppercase;
-}
-
-.sidebar-item {
-padding: 8px 16px;
-cursor: pointer;
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 8px;
-transition: background 0.1s;
-border-left: 2px solid transparent;
-}
-
-.sidebar-item:hover { background: var(–bg3); }
-.sidebar-item.active { background: var(–bg3); border-left-color: var(–accent); color: var(–accent); }
-
-.sidebar-item-label {
-font-size: 12px;
-font-weight: 500;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
-}
-
-.badge {
-font-family: var(–mono);
-font-size: 10px;
-padding: 2px 6px;
-border-radius: 2px;
-flex-shrink: 0;
-}
-
-.badge-ok { background: #1a3d26; color: var(–ok); }
-.badge-warn { background: #3d2a0a; color: var(–warn); }
-.badge-danger { background: #3d1212; color: var(–danger); }
-.badge-info { background: #0e2a3d; color: var(–info); }
-.badge-neutral { background: var(–bg3); color: var(–text2); }
-
 /* CARDS */
 .card {
-background: var(–bg2);
-border: 1px solid var(–border);
-border-radius: 4px;
-margin-bottom: 12px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-bottom: 12px;
 }
-
 .card-header {
-padding: 12px 16px;
-border-bottom: 1px solid var(–border);
-display: flex;
-align-items: center;
-gap: 12px;
-cursor: pointer;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-
-.card-header:hover { background: var(–bg3); }
-
 .card-title {
-font-family: var(–mono);
-font-size: 12px;
-font-weight: 600;
-flex: 1;
-min-width: 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
 }
-
-.card-body {
-padding: 16px;
-}
-
-.card-body.hidden { display: none; }
+.card-body { padding: 12px 14px; }
 
 /* GRID */
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
 
-/* STAT BOX */
+/* STAT */
 .stat-box {
-background: var(–bg2);
-border: 1px solid var(–border);
-border-radius: 4px;
-padding: 16px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 12px;
 }
-
 .stat-label {
-font-family: var(–mono);
-font-size: 10px;
-letter-spacing: 1px;
-color: var(–text3);
-text-transform: uppercase;
-margin-bottom: 8px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 6px;
 }
-
 .stat-value {
-font-family: var(–mono);
-font-size: 28px;
-font-weight: 600;
-line-height: 1;
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 600;
 }
-
 .stat-sub {
-font-size: 11px;
-color: var(–text2);
-margin-top: 6px;
+  font-size: 11px;
+  color: var(--text2);
+  margin-top: 4px;
 }
-
-.stat-ok .stat-value { color: var(–ok); }
-.stat-warn .stat-value { color: var(–warn); }
-.stat-danger .stat-value { color: var(–danger); }
-.stat-accent .stat-value { color: var(–accent); }
+.stat-ok .stat-value { color: var(--ok); }
+.stat-warn .stat-value { color: var(--warn); }
+.stat-danger .stat-value { color: var(--danger); }
 
 /* TABLE */
-table {
-width: 100%;
-border-collapse: collapse;
-}
-
+table { width: 100%; border-collapse: collapse; }
 th {
-font-family: var(–mono);
-font-size: 10px;
-letter-spacing: 1px;
-color: var(–text3);
-text-transform: uppercase;
-padding: 8px 12px;
-text-align: left;
-border-bottom: 1px solid var(–border);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--text3);
+  text-transform: uppercase;
+  padding: 6px 8px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
 }
-
 td {
-padding: 10px 12px;
-border-bottom: 1px solid var(–border);
-font-size: 12px;
-vertical-align: middle;
+  padding: 8px 8px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
 }
-
 tr:last-child td { border-bottom: none; }
-tr:hover td { background: var(–bg3); }
-
-.mono { font-family: var(–mono); }
-
-/* STATUS DOT */
-.dot {
-width: 8px;
-height: 8px;
-border-radius: 50%;
-display: inline-block;
-flex-shrink: 0;
-}
-
-.dot-ok { background: var(–ok); }
-.dot-warn { background: var(–warn); }
-.dot-danger { background: var(–danger); }
-.dot-off { background: var(–text3); }
+tr:hover td { background: var(--bg3); }
 
 /* FORM */
-.form-group { margin-bottom: 14px; }
-
+.form-group { margin-bottom: 10px; }
 .form-label {
-display: block;
-font-family: var(–mono);
-font-size: 10px;
-letter-spacing: 1px;
-color: var(–text3);
-text-transform: uppercase;
-margin-bottom: 6px;
+  display: block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 4px;
 }
-
 input, select, textarea {
-width: 100%;
-background: var(–bg);
-border: 1px solid var(–border2);
-color: var(–text);
-font-family: var(–sans);
-font-size: 13px;
-padding: 8px 10px;
-border-radius: 3px;
-outline: none;
-transition: border-color 0.15s;
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 13px;
+  padding: 7px 8px;
+  border-radius: 3px;
+  outline: none;
 }
-
 input:focus, select:focus, textarea:focus {
-border-color: var(–accent);
+  border-color: var(--accent);
 }
-
-textarea { min-height: 80px; resize: vertical; }
-
-select option { background: var(–bg2); }
+textarea { min-height: 70px; resize: vertical; }
 
 /* BUTTONS */
 .btn {
-font-family: var(–mono);
-font-size: 11px;
-font-weight: 500;
-letter-spacing: 1px;
-padding: 8px 16px;
-border-radius: 3px;
-cursor: pointer;
-border: none;
-transition: all 0.15s;
-text-transform: uppercase;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  padding: 7px 14px;
+  border-radius: 3px;
+  cursor: pointer;
+  border: none;
+  text-transform: uppercase;
 }
-
-.btn-primary { background: var(–accent); color: #000; }
-.btn-primary:hover { background: var(–accent2); }
-.btn-ghost { background: none; border: 1px solid var(–border2); color: var(–text2); }
-.btn-ghost:hover { border-color: var(–accent); color: var(–accent); }
-.btn-danger { background: none; border: 1px solid var(–danger); color: var(–danger); }
-.btn-danger:hover { background: var(–danger); color: #fff; }
-.btn-sm { padding: 4px 10px; font-size: 10px; }
+.btn-primary { background: var(--accent); color: #000; }
+.btn-primary:hover { background: var(--accent2); }
+.btn-ghost {
+  background: none;
+  border: 1px solid var(--border2);
+  color: var(--text2);
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.btn-sm { padding: 4px 8px; font-size: 10px; }
 
 /* SECTION HEADER */
 .section-header {
-display: flex;
-align-items: center;
-justify-content: space-between;
-margin-bottom: 20px;
-padding-bottom: 12px;
-border-bottom: 1px solid var(–border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
 }
-
 .section-title {
-font-family: var(–mono);
-font-size: 14px;
-font-weight: 600;
-color: var(–accent);
-letter-spacing: 2px;
-text-transform: uppercase;
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
-
 .section-sub {
-font-size: 11px;
-color: var(–text2);
-margin-top: 3px;
+  font-size: 11px;
+  color: var(--text2);
+  margin-top: 2px;
 }
 
 /* MODAL */
 .modal-overlay {
-position: fixed;
-inset: 0;
-background: rgba(0,0,0,0.7);
-z-index: 1000;
-display: none;
-align-items: center;
-justify-content: center;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
 }
-
 .modal-overlay.active { display: flex; }
-
 .modal {
-background: var(–bg2);
-border: 1px solid var(–border2);
-border-radius: 4px;
-width: 580px;
-max-width: 95vw;
-max-height: 85vh;
-overflow-y: auto;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  width: 520px;
+  max-width: 95vw;
+  max-height: 85vh;
+  overflow-y: auto;
 }
-
 .modal-header {
-padding: 16px 20px;
-border-bottom: 1px solid var(–border);
-display: flex;
-align-items: center;
-justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-
 .modal-title {
-font-family: var(–mono);
-font-size: 13px;
-font-weight: 600;
-color: var(–accent);
-letter-spacing: 1px;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
 }
-
-.modal-body { padding: 20px; }
-
+.modal-body { padding: 14px 16px; }
 .modal-footer {
-padding: 14px 20px;
-border-top: 1px solid var(–border);
-display: flex;
-gap: 10px;
-justify-content: flex-end;
+  padding: 10px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
 }
-
 .close-btn {
-background: none;
-border: none;
-color: var(–text3);
-font-size: 18px;
-cursor: pointer;
-line-height: 1;
+  background: none;
+  border: none;
+  color: var(--text3);
+  font-size: 18px;
+  cursor: pointer;
 }
-
-.close-btn:hover { color: var(–text); }
-
-/* TIMELINE */
-.timeline-item {
-display: flex;
-gap: 16px;
-padding: 10px 0;
-border-bottom: 1px solid var(–border);
-}
-
-.timeline-item:last-child { border-bottom: none; }
-
-.timeline-dot {
-width: 8px;
-height: 8px;
-border-radius: 50%;
-margin-top: 4px;
-flex-shrink: 0;
-}
-
-.timeline-content { flex: 1; }
-.timeline-title { font-size: 12px; font-weight: 500; }
-.timeline-meta { font-family: var(–mono); font-size: 10px; color: var(–text3); margin-top: 3px; }
-
-/* PILL */
-.pill {
-display: inline-block;
-padding: 2px 8px;
-border-radius: 10px;
-font-size: 10px;
-font-family: var(–mono);
-font-weight: 500;
-}
-
-.pill-ok { background: #1a3d26; color: var(–ok); }
-.pill-warn { background: #3d2a0a; color: var(–warn); }
-.pill-danger { background: #3d1212; color: var(–danger); }
-.pill-info { background: #0e2a3d; color: var(–info); }
-.pill-neutral { background: var(–bg3); color: var(–text2); }
-
-/* PROGRESS BAR */
-.progress-bar {
-height: 4px;
-background: var(–border);
-border-radius: 2px;
-overflow: hidden;
-margin-top: 8px;
-}
-
-.progress-fill {
-height: 100%;
-border-radius: 2px;
-transition: width 0.3s;
-}
-
-/* DIVIDER */
-.divider {
-border: none;
-border-top: 1px solid var(–border);
-margin: 16px 0;
-}
-
-/* STEP LIST */
-.step-list { list-style: none; }
-
-.step-item {
-display: flex;
-align-items: flex-start;
-gap: 12px;
-padding: 8px 0;
-border-bottom: 1px solid var(–border);
-}
-
-.step-item:last-child { border-bottom: none; }
-
-.step-num {
-font-family: var(–mono);
-font-size: 11px;
-color: var(–text3);
-width: 20px;
-flex-shrink: 0;
-padding-top: 1px;
-}
-
-.step-check {
-width: 16px;
-height: 16px;
-accent-color: var(–accent);
-cursor: pointer;
-flex-shrink: 0;
-margin-top: 1px;
-}
-
-.step-text { font-size: 12px; line-height: 1.5; }
-.step-text.checked { color: var(–text3); text-decoration: line-through; }
+.close-btn:hover { color: var(--text); }
 
 /* ALERT BAR */
 .alert-bar {
-padding: 10px 16px;
-border-radius: 3px;
-font-size: 12px;
-margin-bottom: 12px;
-display: flex;
-align-items: center;
-gap: 10px;
+  padding: 8px 12px;
+  border-radius: 3px;
+  font-size: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+.alert-bar-danger { background: #3d1212; border-left: 3px solid var(--danger); color: #ff8080; }
+.alert-bar-warn { background: #3d2a0a; border-left: 3px solid var(--warn); color: #ffb84d; }
+.alert-bar-ok { background: #1a3d26; border-left: 3px solid var(--ok); color: #6dcc8a; }
+.alert-bar-info { background: #0e2a3d; border-left: 3px solid var(--info); color: #7dc4f0; }
 
-.alert-bar-danger { background: #3d1212; border-left: 3px solid var(–danger); color: #ff8080; }
-.alert-bar-warn { background: #3d2a0a; border-left: 3px solid var(–warn); color: #ffb84d; }
-.alert-bar-ok { background: #1a3d26; border-left: 3px solid var(–ok); color: #6dcc8a; }
-.alert-bar-info { background: #0e2a3d; border-left: 3px solid var(–info); color: #7dc4f0; }
-
-/* SCROLLBAR */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(–bg); }
-::-webkit-scrollbar-thumb { background: var(–border2); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(–text3); }
-
-/* CHIPS */
-.chip-group { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
-.chip {
-padding: 3px 10px;
-border: 1px solid var(–border2);
-border-radius: 2px;
-font-size: 11px;
-font-family: var(–mono);
-color: var(–text2);
-}
-
-/* RISK LEVEL */
-.risk-alto { color: var(–danger); font-weight: 600; }
-.risk-medio { color: var(–warn); font-weight: 600; }
-.risk-basso { color: var(–ok); font-weight: 600; }
-
-.flex { display: flex; }
-.flex-center { display: flex; align-items: center; }
-.gap-8 { gap: 8px; }
-.gap-12 { gap: 12px; }
-.gap-16 { gap: 16px; }
-.mt-4 { margin-top: 4px; }
+/* UTILS */
 .mt-8 { margin-top: 8px; }
 .mt-16 { margin-top: 16px; }
 .mb-8 { margin-bottom: 8px; }
-.mb-16 { margin-bottom: 16px; }
+.text2 { color: var(--text2); }
+.mono { font-family: var(--mono); }
+.flex { display: flex; }
+.gap-8 { gap: 8px; }
 .text-right { text-align: right; }
-.text2 { color: var(–text2); }
-.text3 { color: var(–text3); }
-.mono { font-family: var(–mono); }
-.bold { font-weight: 600; }
-</style>
 
+@media (max-width: 900px) {
+  .sidebar { display: none; }
+  main { flex-direction: column; }
+}
+</style>
 </head>
 <body>
-
 <header>
-  <div class="logo">SPP<span>|</span>MANAGER</div>
+  <div class="logo">RSPP<span>|</span>APP</div>
   <nav>
-    <button class="nav-btn active" onclick="switchTab('dashboard', this)">Dashboard</button>
-    <button class="nav-btn" onclick="switchTab('processo', this)">Processo</button>
-    <button class="nav-btn" onclick="switchTab('procedure', this)">Procedure</button>
-    <button class="nav-btn" onclick="switchTab('rischi', this)">Rischi</button>
-    <button class="nav-btn" onclick="switchTab('formazione', this)">Formazione</button>
-    <button class="nav-btn" onclick="switchTab('scadenze', this)">Scadenze</button>
-    <button class="nav-btn" onclick="switchTab('nc', this)">Non Conformità</button>
+    <button class="nav-btn active" data-tab="dashboard">Dashboard</button>
+    <button class="nav-btn" data-tab="azioni">Azioni rapide</button>
+    <button class="nav-btn" data-tab="nc">NC</button>
+    <button class="nav-btn" data-tab="scadenze">Scadenze</button>
+    <button class="nav-btn" data-tab="formazione">Formazione</button>
+    <button class="nav-btn" data-tab="procedure">Procedure</button>
+    <button class="nav-btn" data-tab="rischi">Rischi</button>
   </nav>
   <div class="header-right">
     <span class="date-display" id="currentDate"></span>
-    <button class="btn-icon" onclick="exportData()">↓ EXPORT</button>
-    <button class="btn-icon" onclick="document.getElementById('importFile').click()">↑ IMPORT</button>
-    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+    <button class="btn-icon" id="btnExport">EXPORT</button>
+    <button class="btn-icon" id="btnImport">IMPORT</button>
+    <input type="file" id="importFile" accept=".json" style="display:none">
   </div>
 </header>
 
 <main>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Stato</div>
+      <div class="sidebar-item">
+        <span class="sidebar-item-label">NC aperte</span>
+        <span class="badge badge-danger" id="sb-nc-open">0</span>
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-item-label">Scadenze 30 gg</span>
+        <span class="badge badge-warn" id="sb-scad-30">0</span>
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-item-label">Formazione in scadenza</span>
+        <span class="badge badge-warn" id="sb-form-scad">0</span>
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-item-label">Rischi scoperti</span>
+        <span class="badge badge-info" id="sb-risk-gap">0</span>
+      </div>
+    </div>
+  </aside>
 
-<!-- SIDEBAR -->
+  <div class="content">
+    <!-- DASHBOARD -->
+    <div class="tab-panel active" id="tab-dashboard">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Dashboard</div>
+          <div class="section-sub">Quadro operativo RSPP · oggi</div>
+        </div>
+      </div>
 
-<aside class="sidebar" id="sidebar">
-  <!-- populated by JS -->
-</aside>
+      <div class="grid-4 mb-8">
+        <div class="stat-box stat-danger" id="stat-nc">
+          <div class="stat-label">NC aperte</div>
+          <div class="stat-value">0</div>
+          <div class="stat-sub">Non conformità con azione aperta</div>
+        </div>
+        <div class="stat-box stat-warn" id="stat-scad">
+          <div class="stat-label">Scadenze 30 gg</div>
+          <div class="stat-value">0</div>
+          <div class="stat-sub">Adempimenti entro 30 giorni</div>
+        </div>
+        <div class="stat-box stat-warn" id="stat-form">
+          <div class="stat-label">Formazione in scadenza</div>
+          <div class="stat-value">0</div>
+          <div class="stat-sub">Lavoratori da aggiornare</div>
+        </div>
+        <div class="stat-box stat-ok" id="stat-risk">
+          <div class="stat-label">Rischi coperti</div>
+          <div class="stat-value">0%</div>
+          <div class="stat-sub">Rischi con procedura associata</div>
+        </div>
+      </div>
 
-<!-- CONTENT -->
-
-<div class="content">
-
-  <!-- DASHBOARD -->
-
-  <div class="tab-panel active" id="tab-dashboard">
-    <div class="section-header">
-      <div>
-        <div class="section-title">Stato Sistema SPP</div>
-        <div class="section-sub">Produzione vernici — quadro operativo</div>
+      <div class="grid-2">
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Criticità oggi</div>
+            </div>
+            <div class="card-body" id="dash-criticita"></div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">NC aperte</div>
+            </div>
+            <div class="card-body" id="dash-nc"></div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Scadenze entro 30 giorni</div>
+            </div>
+            <div class="card-body" id="dash-scadenze"></div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Formazione in scadenza</div>
+            </div>
+            <div class="card-body" id="dash-formazione"></div>
+          </div>
+        </div>
       </div>
     </div>
 
-```
-<div id="alert-container"></div>
-
-<div class="grid-4 mb-16">
-  <div class="stat-box" id="stat-procedure"></div>
-  <div class="stat-box" id="stat-rischi"></div>
-  <div class="stat-box" id="stat-formazione"></div>
-  <div class="stat-box" id="stat-scadenze"></div>
-</div>
-
-<div class="grid-2">
-  <div>
-    <div class="card">
-      <div class="card-header" onclick="toggleCard(this)">
-        <div class="card-title">SCADENZE CRITICHE</div>
-        <span class="badge badge-danger" id="badge-scadenze-crit">—</span>
+    <!-- AZIONI RAPIDE -->
+    <div class="tab-panel" id="tab-azioni">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Azioni rapide</div>
+          <div class="section-sub">Tutto in meno di 10 secondi</div>
+        </div>
       </div>
-      <div class="card-body" id="scadenze-crit-list"></div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">+ NC rapida</div>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label">Reparto</label>
+              <input id="q-nc-reparto" placeholder="es. Miscelazione">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tipo</label>
+              <select id="q-nc-tipo">
+                <option>Deviazione procedurale</option>
+                <option>DPI non utilizzati</option>
+                <option>Near miss</option>
+                <option>Attrezzatura non conforme</option>
+                <option>Altro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Descrizione</label>
+              <textarea id="q-nc-desc"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Responsabile azione</label>
+              <input id="q-nc-resp" placeholder="es. Capo reparto">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Scadenza azione</label>
+              <input type="date" id="q-nc-scad">
+            </div>
+            <button class="btn btn-primary" id="btnQuickNC">SALVA NC</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">+ Scadenza rapida</div>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label">Titolo</label>
+              <input id="q-scad-titolo" placeholder="es. Verifica impianto terra">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Data</label>
+              <input type="date" id="q-scad-data">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Responsabile</label>
+              <input id="q-scad-resp" placeholder="es. RSPP, Datore di lavoro">
+            </div>
+            <button class="btn btn-primary" id="btnQuickScad">SALVA SCADENZA</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2 mt-16">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">+ Formazione rapida</div>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label">Lavoratore</label>
+              <input id="q-form-nome" placeholder="Cognome Nome">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Mansione</label>
+              <input id="q-form-mansione" placeholder="es. Operatore miscelazione">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Modulo</label>
+              <input id="q-form-modulo" placeholder="es. Rischio chimico">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Data formazione</label>
+              <input type="date" id="q-form-data">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Scadenza</label>
+              <input type="date" id="q-form-scad">
+            </div>
+            <button class="btn btn-primary" id="btnQuickForm">SALVA FORMAZIONE</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">+ Procedura rapida</div>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label">Titolo</label>
+              <input id="q-proc-titolo" placeholder="es. Gestione solventi">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Reparto</label>
+              <input id="q-proc-reparto" placeholder="es. Miscelazione">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Rischio</label>
+              <input id="q-proc-rischio" placeholder="es. Chimico">
+            </div>
+            <div class="form-group">
+              <label class="form-label">DPI</label>
+              <input id="q-proc-dpi" placeholder="es. Guanti, occhiali, FFP3">
+            </div>
+            <button class="btn btn-primary" id="btnQuickProc">SALVA PROCEDURA</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="card">
-      <div class="card-header" onclick="toggleCard(this)">
-        <div class="card-title">PROCEDURE IN REVISIONE</div>
-        <span class="badge badge-warn" id="badge-proc-rev">—</span>
+
+    <!-- NC -->
+    <div class="tab-panel" id="tab-nc">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Non conformità</div>
+          <div class="section-sub">Deviazioni · anomalie · azioni correttive</div>
+        </div>
+        <button class="btn btn-primary" id="btnNewNC">+ NUOVA NC</button>
       </div>
-      <div class="card-body" id="proc-rev-list"></div>
+      <div id="nc-list"></div>
+    </div>
+
+    <!-- SCADENZE -->
+    <div class="tab-panel" id="tab-scadenze">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Scadenze</div>
+          <div class="section-sub">Adempimenti · verifiche · sorveglianza</div>
+        </div>
+        <button class="btn btn-primary" id="btnNewScad">+ NUOVA SCADENZA</button>
+      </div>
+      <div id="scadenze-list"></div>
+    </div>
+
+    <!-- FORMAZIONE -->
+    <div class="tab-panel" id="tab-formazione">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Formazione</div>
+          <div class="section-sub">Conformità per lavoratore e mansione</div>
+        </div>
+      </div>
+      <div id="formazione-list"></div>
+    </div>
+
+    <!-- PROCEDURE -->
+    <div class="tab-panel" id="tab-procedure">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Procedure</div>
+          <div class="section-sub">Operativo minimo: titolo · reparto · rischio · DPI</div>
+        </div>
+        <button class="btn btn-primary" id="btnNewProc">+ NUOVA PROCEDURA</button>
+      </div>
+      <div id="procedure-list"></div>
+    </div>
+
+    <!-- RISCHI -->
+    <div class="tab-panel" id="tab-rischi">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Rischi</div>
+          <div class="section-sub">Agente · reparto · livello · misure</div>
+        </div>
+        <button class="btn btn-primary" id="btnNewRisk">+ NUOVO RISCHIO</button>
+      </div>
+      <div id="rischi-list"></div>
     </div>
   </div>
-  <div>
-    <div class="card">
-      <div class="card-header" onclick="toggleCard(this)">
-        <div class="card-title">NON CONFORMITÀ APERTE</div>
-        <span class="badge badge-danger" id="badge-nc-open">—</span>
-      </div>
-      <div class="card-body" id="nc-open-list"></div>
-    </div>
-    <div class="card">
-      <div class="card-header" onclick="toggleCard(this)">
-        <div class="card-title">FORMAZIONE IN SCADENZA</div>
-        <span class="badge badge-warn" id="badge-form-scad">—</span>
-      </div>
-      <div class="card-body" id="form-scad-list"></div>
-    </div>
-  </div>
-</div>
-```
-
-  </div>
-
-  <!-- PROCESSO -->
-
-  <div class="tab-panel" id="tab-processo">
-    <div class="section-header">
-      <div>
-        <div class="section-title">Processo Produttivo</div>
-        <div class="section-sub">Fasi · procedure collegate · copertura · gap</div>
-      </div>
-      <button class="btn btn-primary" onclick="openModal('modal-new-fase')">+ NUOVA FASE</button>
-    </div>
-    <div id="processo-gap-bar" style="margin-bottom:16px"></div>
-    <div id="processo-list"></div>
-  </div>
-
-  <!-- PROCEDURE -->
-
-  <div class="tab-panel" id="tab-procedure">
-    <div class="section-header">
-      <div>
-        <div class="section-title">Procedure Operative</div>
-        <div class="section-sub">Ciclo di vita: bozza → vigente → in revisione → storico</div>
-      </div>
-      <button class="btn btn-primary" onclick="openModal('modal-new-proc')">+ NUOVA</button>
-    </div>
-    <div id="procedure-list"></div>
-  </div>
-
-  <!-- RISCHI -->
-
-  <div class="tab-panel" id="tab-rischi">
-    <div class="section-header">
-      <div>
-        <div class="section-title">Mappa Rischi</div>
-        <div class="section-sub">Per mansione · reparto · agente</div>
-      </div>
-      <button class="btn btn-primary" onclick="openModal('modal-new-rischio')">+ NUOVO RISCHIO</button>
-    </div>
-    <div id="rischi-list"></div>
-  </div>
-
-  <!-- FORMAZIONE -->
-
-  <div class="tab-panel" id="tab-formazione">
-    <div class="section-header">
-      <div>
-        <div class="section-title">Formazione & Informazione</div>
-        <div class="section-sub">Per lavoratore · mansione · scadenza</div>
-      </div>
-      <button class="btn btn-primary" onclick="openModal('modal-new-worker')">+ LAVORATORE</button>
-    </div>
-    <div id="formazione-list"></div>
-  </div>
-
-  <!-- SCADENZE -->
-
-  <div class="tab-panel" id="tab-scadenze">
-    <div class="section-header">
-      <div>
-        <div class="section-title">Scadenzario</div>
-        <div class="section-sub">Adempimenti · verifiche · sorveglianza sanitaria</div>
-      </div>
-      <button class="btn btn-primary" onclick="openModal('modal-new-scadenza')">+ SCADENZA</button>
-    </div>
-    <div id="scadenze-list"></div>
-  </div>
-
-  <!-- NON CONFORMITÀ -->
-
-  <div class="tab-panel" id="tab-nc">
-    <div class="section-header">
-      <div>
-        <div class="section-title">Non Conformità</div>
-        <div class="section-sub">Deviazioni procedurali · anomalie · azioni correttive</div>
-      </div>
-      <button class="btn btn-primary" onclick="openModal('modal-new-nc')">+ REGISTRA</button>
-    </div>
-    <div id="nc-list"></div>
-  </div>
-
-</div><!-- /content -->
 </main>
 
-<!-- ===== MODALS ===== -->
+<!-- MODALS -->
 
-<!-- NUOVA PROCEDURA -->
-
-<div class="modal-overlay" id="modal-new-proc">
+<!-- NC -->
+<div class="modal-overlay" id="modal-nc">
   <div class="modal">
     <div class="modal-header">
-      <div class="modal-title">NUOVA PROCEDURA</div>
-      <button class="close-btn" onclick="closeModal('modal-new-proc')">×</button>
+      <div class="modal-title">NON CONFORMITÀ</div>
+      <button class="close-btn" data-close="modal-nc">×</button>
     </div>
     <div class="modal-body">
       <div class="grid-2">
         <div class="form-group">
-          <label class="form-label">Codice</label>
-          <input type="text" id="proc-cod" placeholder="es. POS-001">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Revisione</label>
-          <input type="text" id="proc-rev" value="00">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Titolo</label>
-        <input type="text" id="proc-titolo" placeholder="es. Gestione solventi in reparto miscelazione">
-      </div>
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Reparto</label>
-          <select id="proc-reparto">
-            <option value="">— seleziona —</option>
-            <option>Miscelazione</option>
-            <option>Confezionamento</option>
-            <option>Magazzino</option>
-            <option>Laboratorio</option>
-            <option>Manutenzione</option>
-            <option>Generale</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Tipo rischio</label>
-          <select id="proc-rischio">
-            <option value="">— seleziona —</option>
-            <option>Chimico</option>
-            <option>ATEX</option>
-            <option>Meccanico</option>
-            <option>Elettrico</option>
-            <option>Incendio</option>
-            <option>Ergonomico</option>
-            <option>Generico</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Mansioni coinvolte</label>
-        <input type="text" id="proc-mansioni" placeholder="es. Operatore, Capo turno">
-      </div>
-      <div class="form-group">
-        <label class="form-label">DPI richiesti</label>
-        <input type="text" id="proc-dpi" placeholder="es. Guanti nitrile, occhiali, semimaschera FFP3">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Passi operativi (uno per riga)</label>
-        <textarea id="proc-steps" placeholder="1. Verifica idoneità EPC&#10;2. Indossare DPI previsti&#10;3. ..."></textarea>
-      </div>
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Stato</label>
-          <select id="proc-stato">
-            <option value="vigente">Vigente</option>
-            <option value="bozza">Bozza</option>
-            <option value="revisione">In revisione</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Prossima revisione</label>
-          <input type="date" id="proc-nextrev">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Note / riferimenti normativi</label>
-        <textarea id="proc-note" style="min-height:50px" placeholder="es. Allegato XXXVIII D.Lgs. 81/08 — ATEX"></textarea>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-new-proc')">Annulla</button>
-      <button class="btn btn-primary" onclick="saveProcedura()">SALVA</button>
-    </div>
-  </div>
-</div>
-
-<!-- DETTAGLIO PROCEDURA -->
-
-<div class="modal-overlay" id="modal-view-proc">
-  <div class="modal" style="width:680px">
-    <div class="modal-header">
-      <div class="modal-title" id="view-proc-title">—</div>
-      <button class="close-btn" onclick="closeModal('modal-view-proc')">×</button>
-    </div>
-    <div class="modal-body" id="view-proc-body"></div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-view-proc')">Chiudi</button>
-      <button class="btn btn-ghost" id="btn-edit-proc">Modifica</button>
-    </div>
-  </div>
-</div>
-
-<!-- NUOVO RISCHIO -->
-
-<div class="modal-overlay" id="modal-new-rischio">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">NUOVO RISCHIO</div>
-      <button class="close-btn" onclick="closeModal('modal-new-rischio')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Agente / Fattore di rischio</label>
-          <input type="text" id="r-agente" placeholder="es. Xilene, pressa idraulica">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Categoria</label>
-          <select id="r-cat">
-            <option>Chimico</option>
-            <option>ATEX</option>
-            <option>Cancerogeno/Mutageno</option>
-            <option>Meccanico</option>
-            <option>Elettrico</option>
-            <option>Incendio/Esplosione</option>
-            <option>Fisico</option>
-            <option>Ergonomico</option>
-            <option>Biologico</option>
-          </select>
-        </div>
-      </div>
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Reparto</label>
-          <select id="r-reparto">
-            <option value="">— seleziona —</option>
-            <option>Miscelazione</option>
-            <option>Confezionamento</option>
-            <option>Magazzino</option>
-            <option>Laboratorio</option>
-            <option>Manutenzione</option>
-            <option>Generale</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Mansioni esposte</label>
-          <input type="text" id="r-mansioni" placeholder="es. Operatore miscelazione">
-        </div>
-      </div>
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Livello rischio</label>
-          <select id="r-livello">
-            <option value="alto">Alto</option>
-            <option value="medio">Medio</option>
-            <option value="basso">Basso</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Procedura associata</label>
-          <select id="r-proc">
-            <option value="">— nessuna —</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Misure preventive/protettive</label>
-        <textarea id="r-misure" placeholder="es. Ventilazione forzata, sostituzione solventi, DPI specifici"></textarea>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Note / SDS / riferimenti</label>
-        <textarea id="r-note" style="min-height:50px" placeholder="es. SDS rev.3 — TLV-TWA 50 ppm"></textarea>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-new-rischio')">Annulla</button>
-      <button class="btn btn-primary" onclick="saveRischio()">SALVA</button>
-    </div>
-  </div>
-</div>
-
-<!-- NUOVO LAVORATORE -->
-
-<div class="modal-overlay" id="modal-new-worker">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">NUOVO LAVORATORE</div>
-      <button class="close-btn" onclick="closeModal('modal-new-worker')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Cognome e Nome</label>
-          <input type="text" id="w-nome">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Matricola</label>
-          <input type="text" id="w-mat">
-        </div>
-      </div>
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Mansione</label>
-          <input type="text" id="w-mansione">
+          <label class="form-label">Data</label>
+          <input type="date" id="nc-data">
         </div>
         <div class="form-group">
           <label class="form-label">Reparto</label>
-          <select id="w-reparto">
-            <option value="">— seleziona —</option>
-            <option>Miscelazione</option>
-            <option>Confezionamento</option>
-            <option>Magazzino</option>
-            <option>Laboratorio</option>
-            <option>Manutenzione</option>
-            <option>Generale</option>
-          </select>
-        </div>
-      </div>
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Data assunzione</label>
-          <input type="date" id="w-data-ass">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Sorveglianza sanitaria (scadenza)</label>
-          <input type="date" id="w-sorveglianza">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Formazioni completate (titolo | data | scadenza)</label>
-        <textarea id="w-formazioni" placeholder="Sicurezza generale | 2022-03-10 | 2027-03-10&#10;Rischio chimico | 2023-06-01 | 2026-06-01"></textarea>
-      </div>
-      <div class="form-group">
-        <label class="form-label">DPI assegnati</label>
-        <input type="text" id="w-dpi" placeholder="es. Guanti nitrile, maschera FFP3, visiera">
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-new-worker')">Annulla</button>
-      <button class="btn btn-primary" onclick="saveWorker()">SALVA</button>
-    </div>
-  </div>
-</div>
-
-<!-- NUOVA SCADENZA -->
-
-<div class="modal-overlay" id="modal-new-scadenza">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">NUOVA SCADENZA</div>
-      <button class="close-btn" onclick="closeModal('modal-new-scadenza')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Adempimento</label>
-          <input type="text" id="s-titolo" placeholder="es. Verifica impianto messa a terra">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Categoria</label>
-          <select id="s-cat">
-            <option>Verifiche impianti</option>
-            <option>Attrezzature/macchine</option>
-            <option>Sorveglianza sanitaria</option>
-            <option>Formazione</option>
-            <option>Documentazione DVR</option>
-            <option>Riunione periodica</option>
-            <option>Antincendio</option>
-            <option>ATEX</option>
-            <option>Altro</option>
-          </select>
-        </div>
-      </div>
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Scadenza</label>
-          <input type="date" id="s-data">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Riferimento normativo</label>
-          <input type="text" id="s-norma" placeholder="es. D.Lgs. 81/08 art. 86">
-        </div>
-      </div>
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Responsabile</label>
-          <input type="text" id="s-resp" placeholder="es. RSPP, Datore di lavoro">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Periodicità</label>
-          <select id="s-period">
-            <option value="">— una tantum —</option>
-            <option value="annuale">Annuale</option>
-            <option value="biennale">Biennale</option>
-            <option value="quinquennale">Quinquennale</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Note</label>
-        <textarea id="s-note" style="min-height:50px"></textarea>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-new-scadenza')">Annulla</button>
-      <button class="btn btn-primary" onclick="saveScadenza()">SALVA</button>
-    </div>
-  </div>
-</div>
-
-<!-- NUOVA NC -->
-
-<div class="modal-overlay" id="modal-new-nc">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">NON CONFORMITÀ / ANOMALIA</div>
-      <button class="close-btn" onclick="closeModal('modal-new-nc')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">Data rilevazione</label>
-          <input type="date" id="nc-data" value="">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Reparto</label>
-          <select id="nc-reparto">
-            <option value="">— seleziona —</option>
-            <option>Miscelazione</option>
-            <option>Confezionamento</option>
-            <option>Magazzino</option>
-            <option>Laboratorio</option>
-            <option>Manutenzione</option>
-            <option>Generale</option>
-          </select>
+          <input id="nc-reparto">
         </div>
       </div>
       <div class="grid-2">
@@ -1120,7 +729,6 @@ color: var(–text2);
             <option>Near miss</option>
             <option>DPI non utilizzati</option>
             <option>Attrezzatura non conforme</option>
-            <option>Sostanza non gestita</option>
             <option>Altro</option>
           </select>
         </div>
@@ -1138,1141 +746,724 @@ color: var(–text2);
         <textarea id="nc-desc"></textarea>
       </div>
       <div class="form-group">
-        <label class="form-label">Procedura violata (se applicabile)</label>
-        <select id="nc-proc">
-          <option value="">— nessuna —</option>
-        </select>
-      </div>
-      <div class="form-group">
         <label class="form-label">Azione correttiva</label>
-        <textarea id="nc-azione" placeholder="Descrivere l'azione correttiva prevista"></textarea>
+        <textarea id="nc-azione"></textarea>
       </div>
       <div class="grid-2">
         <div class="form-group">
           <label class="form-label">Responsabile azione</label>
-          <input type="text" id="nc-resp">
+          <input id="nc-resp">
         </div>
         <div class="form-group">
           <label class="form-label">Scadenza azione</label>
-          <input type="date" id="nc-scad-azione">
+          <input type="date" id="nc-scad">
         </div>
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-new-nc')">Annulla</button>
-      <button class="btn btn-primary" onclick="saveNC()">SALVA</button>
+      <button class="btn btn-ghost" data-close="modal-nc">Annulla</button>
+      <button class="btn btn-primary" id="save-nc">SALVA</button>
     </div>
   </div>
 </div>
 
-<!-- NUOVA FASE PROCESSO -->
-
-<div class="modal-overlay" id="modal-new-fase">
-  <div class="modal" style="width:640px">
+<!-- SCADENZA -->
+<div class="modal-overlay" id="modal-scad">
+  <div class="modal">
     <div class="modal-header">
-      <div class="modal-title">NUOVA FASE DI PROCESSO</div>
-      <button class="close-btn" onclick="closeModal('modal-new-fase')">×</button>
+      <div class="modal-title">SCADENZA</div>
+      <button class="close-btn" data-close="modal-scad">×</button>
     </div>
     <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Titolo</label>
+        <input id="s-titolo">
+      </div>
       <div class="grid-2">
         <div class="form-group">
-          <label class="form-label">Codice fase</label>
-          <input type="text" id="fase-cod" placeholder="es. F-01">
+          <label class="form-label">Data</label>
+          <input type="date" id="s-data">
         </div>
         <div class="form-group">
-          <label class="form-label">Ordine sequenza</label>
-          <input type="number" id="fase-ordine" min="1" value="1">
+          <label class="form-label">Responsabile</label>
+          <input id="s-resp">
         </div>
       </div>
       <div class="form-group">
-        <label class="form-label">Nome fase</label>
-        <input type="text" id="fase-nome" placeholder="es. Pesatura materie prime">
+        <label class="form-label">Categoria</label>
+        <select id="s-cat">
+          <option>Verifiche impianti</option>
+          <option>Attrezzature/macchine</option>
+          <option>Sorveglianza sanitaria</option>
+          <option>Formazione</option>
+          <option>Documentazione DVR</option>
+          <option>Riunione periodica</option>
+          <option>Antincendio</option>
+          <option>Altro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Note</label>
+        <textarea id="s-note"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-close="modal-scad">Annulla</button>
+      <button class="btn btn-primary" id="save-scad">SALVA</button>
+    </div>
+  </div>
+</div>
+
+<!-- PROCEDURA -->
+<div class="modal-overlay" id="modal-proc">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">PROCEDURA</div>
+      <button class="close-btn" data-close="modal-proc">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Titolo</label>
+        <input id="p-titolo">
       </div>
       <div class="grid-2">
         <div class="form-group">
           <label class="form-label">Reparto</label>
-          <select id="fase-reparto">
-            <option value="">— seleziona —</option>
-            <option>Miscelazione</option>
-            <option>Confezionamento</option>
-            <option>Magazzino</option>
-            <option>Laboratorio</option>
-            <option>Manutenzione</option>
-            <option>Generale</option>
-          </select>
+          <input id="p-reparto">
         </div>
         <div class="form-group">
-          <label class="form-label">Tipo lavorazione</label>
-          <select id="fase-tipo">
-            <option value="">— seleziona —</option>
-            <option>Avvio lavorazione</option>
-            <option>Lavorazione continua</option>
-            <option>Cambio prodotto / pulizia</option>
-            <option>Cambio turno</option>
-            <option>Manutenzione</option>
-            <option>Ricezione materiali</option>
-            <option>Spedizione</option>
-            <option>Controllo qualità</option>
-            <option>Lavori in appalto</option>
+          <label class="form-label">Rischio</label>
+          <input id="p-rischio">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">DPI</label>
+        <input id="p-dpi">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Passi operativi (uno per riga)</label>
+        <textarea id="p-steps"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-close="modal-proc">Annulla</button>
+      <button class="btn btn-primary" id="save-proc">SALVA</button>
+    </div>
+  </div>
+</div>
+
+<!-- RISCHIO -->
+<div class="modal-overlay" id="modal-risk">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">RISCHIO</div>
+      <button class="close-btn" data-close="modal-risk">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Agente / fattore</label>
+        <input id="r-agente">
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label">Reparto</label>
+          <input id="r-reparto">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Livello</label>
+          <select id="r-livello">
+            <option value="alto">Alto</option>
+            <option value="medio">Medio</option>
+            <option value="basso">Basso</option>
           </select>
         </div>
       </div>
       <div class="form-group">
-        <label class="form-label">Mansioni coinvolte</label>
-        <input type="text" id="fase-mansioni" placeholder="es. Operatore miscelazione, Capo turno">
+        <label class="form-label">Misure</label>
+        <textarea id="r-misure"></textarea>
       </div>
       <div class="form-group">
-        <label class="form-label">Macchine / impianti coinvolti</label>
-        <input type="text" id="fase-macchine" placeholder="es. Dispersore D1, Pompa travaso">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Sostanze / materiali critici</label>
-        <input type="text" id="fase-sostanze" placeholder="es. Xilene, pigmenti cancerogeni">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Procedure collegate</label>
-        <div id="fase-proc-checks" style="display:flex;flex-direction:column;gap:6px;margin-top:4px"></div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Rischi associati</label>
-        <div id="fase-rischi-checks" style="display:flex;flex-direction:column;gap:6px;margin-top:4px"></div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Note operative</label>
-        <textarea id="fase-note" style="min-height:50px" placeholder="Vincoli, prerequisiti, condizioni particolari"></textarea>
+        <label class="form-label">Procedura associata (titolo)</label>
+        <input id="r-proc">
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-new-fase')">Annulla</button>
-      <button class="btn btn-primary" onclick="saveFase()">SALVA</button>
+      <button class="btn btn-ghost" data-close="modal-risk">Annulla</button>
+      <button class="btn btn-primary" id="save-risk">SALVA</button>
     </div>
   </div>
 </div>
 
-<!-- DETTAGLIO FASE -->
-
-<div class="modal-overlay" id="modal-view-fase">
-  <div class="modal" style="width:700px">
-    <div class="modal-header">
-      <div class="modal-title" id="view-fase-title">—</div>
-      <button class="close-btn" onclick="closeModal('modal-view-fase')">×</button>
-    </div>
-    <div class="modal-body" id="view-fase-body"></div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-view-fase')">Chiudi</button>
-    </div>
-  </div>
-</div>
-
+<!-- SCRIPT -->
 <script>
-// ============================================================
-// DATA STORE
-// ============================================================
-let db = {
-  procedure: [],
-  rischi: [],
-  workers: [],
-  scadenze: [],
+const state = {
   nc: [],
-  fasi: []
+  scadenze: [],
+  formazione: [],
+  procedure: [],
+  rischi: []
 };
 
-function loadDB() {
-  const saved = localStorage.getItem('spp_manager_db');
-  if (saved) {
-    try { db = JSON.parse(saved); } catch(e) {}
-  } else {
-    seedData();
-  }
+function loadState() {
+  try {
+    const raw = localStorage.getItem('rspp_app_v1');
+    if (raw) {
+      const data = JSON.parse(raw);
+      ['nc','scadenze','formazione','procedure','rischi'].forEach(k => {
+        if (Array.isArray(data[k])) state[k] = data[k];
+      });
+    }
+  } catch(e) { console.error(e); }
 }
 
-function saveDB() {
-  localStorage.setItem('spp_manager_db', JSON.stringify(db));
+function saveState() {
+  localStorage.setItem('rspp_app_v1', JSON.stringify(state));
+  renderAll();
 }
 
-function exportData() {
-  const blob = new Blob([JSON.stringify(db, null, 2)], {type: 'application/json'});
+function formatDate(d) {
+  if (!d) return '';
+  const dt = new Date(d);
+  if (isNaN(dt)) return d;
+  return dt.toISOString().slice(0,10);
+}
+
+function daysDiff(dateStr) {
+  if (!dateStr) return null;
+  const d = new Date(dateStr);
+  if (isNaN(d)) return null;
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  d.setHours(0,0,0,0);
+  return Math.round((d - today) / (1000*60*60*24));
+}
+
+/* NAV */
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('.tab-panel').forEach(p => {
+      p.classList.toggle('active', p.id === 'tab-' + tab);
+    });
+  });
+});
+
+/* DATE HEADER */
+document.getElementById('currentDate').textContent =
+  new Date().toLocaleDateString('it-IT', { weekday:'short', day:'2-digit', month:'2-digit', year:'numeric' });
+
+/* EXPORT / IMPORT */
+document.getElementById('btnExport').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `spp_manager_${today()}.json`;
+  a.href = url;
+  a.download = 'rspp_app_export.json';
   a.click();
-}
+  URL.revokeObjectURL(url);
+});
 
-function importData(e) {
+document.getElementById('btnImport').addEventListener('click', () => {
+  document.getElementById('importFile').click();
+});
+document.getElementById('importFile').addEventListener('change', e => {
   const file = e.target.files[0];
   if (!file) return;
   const reader = new FileReader();
   reader.onload = ev => {
     try {
-      db = JSON.parse(ev.target.result);
-      saveDB();
-      renderAll();
+      const data = JSON.parse(ev.target.result);
+      ['nc','scadenze','formazione','procedure','rischi'].forEach(k => {
+        if (Array.isArray(data[k])) state[k] = data[k];
+      });
+      saveState();
     } catch(err) { alert('File non valido'); }
   };
   reader.readAsText(file);
-  e.target.value = '';
+});
+
+/* MODALS */
+function openModal(id) {
+  document.getElementById(id).classList.add('active');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+}
+document.querySelectorAll('.close-btn,[data-close]').forEach(el => {
+  el.addEventListener('click', () => {
+    const id = el.dataset.close;
+    if (id) closeModal(id);
+  });
+});
+
+/* QUICK ACTIONS */
+document.getElementById('btnQuickNC').addEventListener('click', () => {
+  const reparto = document.getElementById('q-nc-reparto').value.trim();
+  const tipo = document.getElementById('q-nc-tipo').value;
+  const desc = document.getElementById('q-nc-desc').value.trim();
+  const resp = document.getElementById('q-nc-resp').value.trim();
+  const scad = document.getElementById('q-nc-scad').value;
+  if (!reparto || !desc) { alert('Reparto e descrizione obbligatori'); return; }
+  state.nc.push({
+    id: Date.now(),
+    data: formatDate(new Date()),
+    reparto, tipo,
+    grav: 'media',
+    desc,
+    azione: '',
+    resp,
+    scad,
+    stato: 'aperta'
+  });
+  document.getElementById('q-nc-reparto').value = '';
+  document.getElementById('q-nc-desc').value = '';
+  document.getElementById('q-nc-resp').value = '';
+  document.getElementById('q-nc-scad').value = '';
+  saveState();
+});
+
+document.getElementById('btnQuickScad').addEventListener('click', () => {
+  const titolo = document.getElementById('q-scad-titolo').value.trim();
+  const data = document.getElementById('q-scad-data').value;
+  const resp = document.getElementById('q-scad-resp').value.trim();
+  if (!titolo || !data) { alert('Titolo e data obbligatori'); return; }
+  state.scadenze.push({
+    id: Date.now(),
+    titolo,
+    data,
+    resp,
+    cat: 'Altro',
+    note: ''
+  });
+  document.getElementById('q-scad-titolo').value = '';
+  document.getElementById('q-scad-data').value = '';
+  document.getElementById('q-scad-resp').value = '';
+  saveState();
+});
+
+document.getElementById('btnQuickForm').addEventListener('click', () => {
+  const nome = document.getElementById('q-form-nome').value.trim();
+  const mansione = document.getElementById('q-form-mansione').value.trim();
+  const modulo = document.getElementById('q-form-modulo').value.trim();
+  const data = document.getElementById('q-form-data').value;
+  const scad = document.getElementById('q-form-scad').value;
+  if (!nome || !modulo) { alert('Lavoratore e modulo obbligatori'); return; }
+  state.formazione.push({
+    id: Date.now(),
+    nome,
+    mansione,
+    modulo,
+    data,
+    scad
+  });
+  document.getElementById('q-form-nome').value = '';
+  document.getElementById('q-form-mansione').value = '';
+  document.getElementById('q-form-modulo').value = '';
+  document.getElementById('q-form-data').value = '';
+  document.getElementById('q-form-scad').value = '';
+  saveState();
+});
+
+document.getElementById('btnQuickProc').addEventListener('click', () => {
+  const titolo = document.getElementById('q-proc-titolo').value.trim();
+  const reparto = document.getElementById('q-proc-reparto').value.trim();
+  const rischio = document.getElementById('q-proc-rischio').value.trim();
+  const dpi = document.getElementById('q-proc-dpi').value.trim();
+  if (!titolo) { alert('Titolo obbligatorio'); return; }
+  state.procedure.push({
+    id: Date.now(),
+    titolo,
+    reparto,
+    rischio,
+    dpi,
+    steps: ''
+  });
+  document.getElementById('q-proc-titolo').value = '';
+  document.getElementById('q-proc-reparto').value = '';
+  document.getElementById('q-proc-rischio').value = '';
+  document.getElementById('q-proc-dpi').value = '';
+  saveState();
+});
+
+/* BUTTONS NEW */
+document.getElementById('btnNewNC').addEventListener('click', () => {
+  document.getElementById('nc-data').value = formatDate(new Date());
+  document.getElementById('nc-reparto').value = '';
+  document.getElementById('nc-tipo').value = 'Deviazione procedurale';
+  document.getElementById('nc-grav').value = 'media';
+  document.getElementById('nc-desc').value = '';
+  document.getElementById('nc-azione').value = '';
+  document.getElementById('nc-resp').value = '';
+  document.getElementById('nc-scad').value = '';
+  openModal('modal-nc');
+});
+
+document.getElementById('save-nc').addEventListener('click', () => {
+  const data = document.getElementById('nc-data').value;
+  const reparto = document.getElementById('nc-reparto').value.trim();
+  const tipo = document.getElementById('nc-tipo').value;
+  const grav = document.getElementById('nc-grav').value;
+  const desc = document.getElementById('nc-desc').value.trim();
+  const azione = document.getElementById('nc-azione').value.trim();
+  const resp = document.getElementById('nc-resp').value.trim();
+  const scad = document.getElementById('nc-scad').value;
+  if (!reparto || !desc) { alert('Reparto e descrizione obbligatori'); return; }
+  state.nc.push({
+    id: Date.now(),
+    data,
+    reparto,
+    tipo,
+    grav,
+    desc,
+    azione,
+    resp,
+    scad,
+    stato: 'aperta'
+  });
+  closeModal('modal-nc');
+  saveState();
+});
+
+document.getElementById('btnNewScad').addEventListener('click', () => {
+  document.getElementById('s-titolo').value = '';
+  document.getElementById('s-data').value = '';
+  document.getElementById('s-resp').value = '';
+  document.getElementById('s-cat').value = 'Verifiche impianti';
+  document.getElementById('s-note').value = '';
+  openModal('modal-scad');
+});
+
+document.getElementById('save-scad').addEventListener('click', () => {
+  const titolo = document.getElementById('s-titolo').value.trim();
+  const data = document.getElementById('s-data').value;
+  const resp = document.getElementById('s-resp').value.trim();
+  const cat = document.getElementById('s-cat').value;
+  const note = document.getElementById('s-note').value.trim();
+  if (!titolo || !data) { alert('Titolo e data obbligatori'); return; }
+  state.scadenze.push({
+    id: Date.now(),
+    titolo,
+    data,
+    resp,
+    cat,
+    note
+  });
+  closeModal('modal-scad');
+  saveState();
+});
+
+document.getElementById('btnNewProc').addEventListener('click', () => {
+  document.getElementById('p-titolo').value = '';
+  document.getElementById('p-reparto').value = '';
+  document.getElementById('p-rischio').value = '';
+  document.getElementById('p-dpi').value = '';
+  document.getElementById('p-steps').value = '';
+  openModal('modal-proc');
+});
+
+document.getElementById('save-proc').addEventListener('click', () => {
+  const titolo = document.getElementById('p-titolo').value.trim();
+  const reparto = document.getElementById('p-reparto').value.trim();
+  const rischio = document.getElementById('p-rischio').value.trim();
+  const dpi = document.getElementById('p-dpi').value.trim();
+  const steps = document.getElementById('p-steps').value.trim();
+  if (!titolo) { alert('Titolo obbligatorio'); return; }
+  state.procedure.push({
+    id: Date.now(),
+    titolo,
+    reparto,
+    rischio,
+    dpi,
+    steps
+  });
+  closeModal('modal-proc');
+  saveState();
+});
+
+document.getElementById('btnNewRisk').addEventListener('click', () => {
+  document.getElementById('r-agente').value = '';
+  document.getElementById('r-reparto').value = '';
+  document.getElementById('r-livello').value = 'alto';
+  document.getElementById('r-misure').value = '';
+  document.getElementById('r-proc').value = '';
+  openModal('modal-risk');
+});
+
+document.getElementById('save-risk').addEventListener('click', () => {
+  const agente = document.getElementById('r-agente').value.trim();
+  const reparto = document.getElementById('r-reparto').value.trim();
+  const livello = document.getElementById('r-livello').value;
+  const misure = document.getElementById('r-misure').value.trim();
+  const proc = document.getElementById('r-proc').value.trim();
+  if (!agente) { alert('Agente obbligatorio'); return; }
+  state.rischi.push({
+    id: Date.now(),
+    agente,
+    reparto,
+    livello,
+    misure,
+    proc
+  });
+  closeModal('modal-risk');
+  saveState();
+});
+
+/* RENDERING */
+
+function renderDashboard() {
+  const ncOpen = state.nc.filter(n => n.stato === 'aperta');
+  const scad30 = state.scadenze.filter(s => {
+    const d = daysDiff(s.data);
+    return d !== null && d >= 0 && d <= 30;
+  });
+  const formScad = state.formazione.filter(f => {
+    const d = daysDiff(f.scad);
+    return d !== null && d >= 0 && d <= 60;
+  });
+
+  const risksWithProc = state.rischi.length
+    ? Math.round(100 * state.rischi.filter(r => r.proc && r.proc.trim()).length / state.rischi.length)
+    : 0;
+
+  document.querySelector('#stat-nc .stat-value').textContent = ncOpen.length;
+  document.querySelector('#stat-scad .stat-value').textContent = scad30.length;
+  document.querySelector('#stat-form .stat-value').textContent = formScad.length;
+  document.querySelector('#stat-risk .stat-value').textContent = risksWithProc + '%';
+
+  // criticità
+  const crit = [];
+  if (ncOpen.length) crit.push(`<div class="alert-bar alert-bar-danger">${ncOpen.length} NC aperte</div>`);
+  if (scad30.length) crit.push(`<div class="alert-bar alert-bar-warn">${scad30.length} scadenze entro 30 giorni</div>`);
+  if (formScad.length) crit.push(`<div class="alert-bar alert-bar-warn">${formScad.length} lavoratori con formazione in scadenza</div>`);
+  if (!crit.length) crit.push(`<div class="alert-bar alert-bar-ok">Nessuna criticità rilevante oggi</div>`);
+  document.getElementById('dash-criticita').innerHTML = crit.join('');
+
+  // NC list short
+  const ncHtml = ncOpen.slice(0,5).map(n => {
+    const d = daysDiff(n.scad);
+    let tag = '';
+    if (d !== null) {
+      if (d < 0) tag = `<span class="badge badge-danger">Scaduta</span>`;
+      else if (d <= 7) tag = `<span class="badge badge-warn">${d} gg</span>`;
+      else tag = `<span class="badge badge-neutral">${d} gg</span>`;
+    }
+    return `<div class="mb-8">
+      <div class="mono">${formatDate(n.data)} · ${n.reparto}</div>
+      <div>${n.tipo} – ${n.desc}</div>
+      <div class="mt-4">${tag}</div>
+    </div>`;
+  }).join('') || '<span class="text2">Nessuna NC aperta</span>';
+  document.getElementById('dash-nc').innerHTML = ncHtml;
+
+  // Scadenze short
+  const scHtml = scad30.slice(0,5).map(s => {
+    const d = daysDiff(s.data);
+    let tag = '';
+    if (d !== null) {
+      if (d < 0) tag = `<span class="badge badge-danger">Scaduta</span>`;
+      else if (d <= 7) tag = `<span class="badge badge-warn">${d} gg</span>`;
+      else tag = `<span class="badge badge-neutral">${d} gg</span>`;
+    }
+    return `<div class="mb-8">
+      <div class="mono">${formatDate(s.data)} · ${s.cat}</div>
+      <div>${s.titolo}</div>
+      <div class="mt-4">${tag}</div>
+    </div>`;
+  }).join('') || '<span class="text2">Nessuna scadenza entro 30 giorni</span>';
+  document.getElementById('dash-scadenze').innerHTML = scHtml;
+
+  // Formazione short
+  const fHtml = formScad.slice(0,5).map(f => {
+    const d = daysDiff(f.scad);
+    let tag = '';
+    if (d !== null) {
+      if (d < 0) tag = `<span class="badge badge-danger">Scaduta</span>`;
+      else if (d <= 30) tag = `<span class="badge badge-warn">${d} gg</span>`;
+      else tag = `<span class="badge badge-neutral">${d} gg</span>`;
+    }
+    return `<div class="mb-8">
+      <div class="mono">${f.nome} · ${f.mansione || 'mansione n/d'}</div>
+      <div>${f.modulo}</div>
+      <div class="mt-4">${tag}</div>
+    </div>`;
+  }).join('') || '<span class="text2">Nessuna formazione in scadenza</span>';
+  document.getElementById('dash-formazione').innerHTML = fHtml;
 }
 
-function seedData() {
-  const t = today();
-  const inMonth = daysFromNow(25);
-  const overdue = daysFromNow(-5);
-  const soon = daysFromNow(10);
-
-  db.procedure = [
-    { id: 'p1', cod: 'POS-001', rev: '02', titolo: 'Gestione solventi in miscelazione', reparto: 'Miscelazione', rischio: 'Chimico', mansioni: 'Operatore miscelazione, Capo turno', dpi: 'Guanti nitrile, occhiali, semimaschera A2P3', steps: ['Verifica ventilazione forzata attiva', 'Indossare DPI previsti', 'Verificare integrità contenitori prima del travaso', 'Aprire rubinetti lentamente, evitare spruzzi', 'A fine operazione chiudere contenitori e smaltire DPI usati'], stato: 'vigente', nextrev: inMonth, note: 'Allegato XXXVIII D.Lgs.81/08 — ATEX zona 2', data: t },
-    { id: 'p2', cod: 'POS-002', rev: '01', titolo: 'Avvio e arresto dispersore', reparto: 'Miscelazione', rischio: 'Meccanico', mansioni: 'Operatore miscelazione', dpi: 'Guanti meccanici, occhiali, scarpe antinfortunio', steps: ['Verificare che il dispersore sia libero da ostacoli', 'Posizionare il coperchio di protezione', 'Avviare a velocità minima', 'Aumentare gradualmente la velocità secondo scheda tecnica', 'Prima di ogni intervento: fermare e applicare LOTO'], stato: 'vigente', nextrev: daysFromNow(180), note: '', data: t },
-    { id: 'p3', cod: 'POS-003', rev: '00', titolo: 'Gestione prodotti cancerogeni', reparto: 'Laboratorio', rischio: 'Cancerogeno/Mutageno', mansioni: 'Tecnico laboratorio', dpi: 'Guanti nitrile doppio strato, maschera FP3, tuta Tyvek', steps: ['Accedere al registro cancerogeni prima di ogni utilizzo', 'Lavorare esclusivamente sotto cappa aspirante', 'Registrare quantità utilizzata nel registro esposto', 'Smaltire come rifiuto speciale pericoloso'], stato: 'revisione', nextrev: soon, note: 'Titolo IX Capo II D.Lgs.81/08 — Registro esposti obbligatorio', data: t },
-    { id: 'p4', cod: 'POS-004', rev: '01', titolo: 'Movimentazione carichi in magazzino', reparto: 'Magazzino', rischio: 'Ergonomico', mansioni: 'Magazziniere', dpi: 'Scarpe antinfortunio, guanti da lavoro', steps: ['Per carichi >25 kg richiedere ausilio meccanico', 'Posizione corretta: schiena dritta, carico vicino al corpo', 'Non superare altezza spalle', 'Segnalare pavimenti bagnati o ostacoli'], stato: 'bozza', nextrev: daysFromNow(60), note: '', data: t }
-  ];
-
-  db.rischi = [
-    { id: 'r1', agente: 'Solventi organici (xilene, toluene)', cat: 'Chimico', reparto: 'Miscelazione', mansioni: 'Operatore miscelazione', livello: 'alto', proc: 'p1', misure: 'Ventilazione forzata, sostituzione solventi meno pericolosi, DPI vie respiratorie, sorveglianza sanitaria semestrale', note: 'TLV-TWA xilene: 50 ppm — SDS rev.4 disponibile', data: t },
-    { id: 'r2', agente: 'Zone ATEX — vapori infiammabili', cat: 'ATEX', reparto: 'Miscelazione', mansioni: 'Tutti gli addetti', livello: 'alto', proc: 'p1', misure: 'Classificazione zona 2, attrezzature EX, divieto fiamme libere, messa a terra contenitori', note: 'Documento Protezione Esplosione aggiornato 2023', data: t },
-    { id: 'r3', agente: 'Pigmenti a base di piombo', cat: 'Cancerogeno/Mutageno', reparto: 'Laboratorio', mansioni: 'Tecnico laboratorio', livello: 'alto', proc: 'p3', misure: 'Registro esposti, sorveglianza sanitaria annuale, DPI specifici, cappa aspirante', note: '', data: t },
-    { id: 'r4', agente: 'Parti in movimento dispersore', cat: 'Meccanico', reparto: 'Miscelazione', mansioni: 'Operatore miscelazione', livello: 'medio', proc: 'p2', misure: 'Ripari fissi e mobili interbloccati, procedura LOTO, formazione specifica', note: '', data: t }
-  ];
-
-  db.workers = [
-    { id: 'w1', nome: 'Rossi Marco', mat: 'OP001', mansione: 'Operatore miscelazione', reparto: 'Miscelazione', dataAss: '2019-03-15', sorveglianza: soon, formazioni: 'Sicurezza generale | 2021-04-10 | 2026-04-10\nRischio chimico | 2022-06-01 | 2025-06-01\nATEX | 2023-01-15 | 2026-01-15', dpi: 'Guanti nitrile, semimaschera A2P3, occhiali', data: t },
-    { id: 'w2', nome: 'Bianchi Laura', mat: 'TL001', mansione: 'Tecnico laboratorio', reparto: 'Laboratorio', dataAss: '2020-09-01', sorveglianza: daysFromNow(90), formazioni: 'Sicurezza generale | 2020-10-01 | 2025-10-01\nCancerogeni | 2021-03-20 | 2026-03-20', dpi: 'Guanti nitrile doppio strato, maschera FP3, tuta Tyvek', data: t },
-    { id: 'w3', nome: 'Ferrari Giovanni', mat: 'MG001', mansione: 'Magazziniere', reparto: 'Magazzino', dataAss: '2018-05-20', sorveglianza: overdue, formazioni: 'Sicurezza generale | 2020-05-01 | 2025-05-01', dpi: 'Scarpe antinfortunio, guanti da lavoro', data: t }
-  ];
-
-  db.scadenze = [
-    { id: 's1', titolo: 'Verifica impianto messa a terra', cat: 'Verifiche impianti', data: soon, norma: 'D.Lgs. 81/08 art. 86', resp: 'RSPP / Datore di lavoro', period: 'biennale', note: 'Organismo notificato: INAIL o ente abilitato', stato: 'aperta' },
-    { id: 's2', titolo: 'Riunione periodica annuale art. 35', cat: 'Riunione periodica', data: daysFromNow(45), norma: 'D.Lgs. 81/08 art. 35', resp: 'Datore di lavoro', period: 'annuale', note: 'Convocare RLS e MC', stato: 'aperta' },
-    { id: 's3', titolo: 'Aggiornamento DVR — revisione annuale', cat: 'Documentazione DVR', data: overdue, norma: 'D.Lgs. 81/08 art. 29', resp: 'RSPP', period: 'annuale', note: '', stato: 'scaduta' },
-    { id: 's4', titolo: 'Prova evacuazione antincendio', cat: 'Antincendio', data: daysFromNow(60), norma: 'D.M. 02/09/2021', resp: 'RSPP', period: 'annuale', note: 'Almeno una prova annuale', stato: 'aperta' },
-    { id: 's5', titolo: 'Verifica estintori', cat: 'Antincendio', data: daysFromNow(15), norma: 'D.M. 07/01/2005', resp: 'Ditta abilitata', period: 'annuale', note: '', stato: 'aperta' }
-  ];
-
-  db.nc = [
-    { id: 'nc1', data: daysFromNow(-10), reparto: 'Miscelazione', tipo: 'DPI non utilizzati', grav: 'alta', desc: 'Operatore rilevato senza semimaschera durante travaso solvente', proc: 'p1', azione: 'Richiamo formale, retraining su POS-001, verifica DPI disponibili', resp: 'Capo reparto', scadAzione: daysFromNow(5), stato: 'aperta' },
-    { id: 'nc2', data: daysFromNow(-20), reparto: 'Magazzino', tipo: 'Near miss', grav: 'media', desc: 'Fusto caduto durante movimentazione, nessun infortunio. Pavimento bagnato non segnalato', proc: '', azione: 'Installare cartellonistica permanente, aggiornare procedura movimentazione', resp: 'RSPP', scadAzione: daysFromNow(15), stato: 'aperta' },
-    { id: 'nc3', data: daysFromNow(-30), reparto: 'Laboratorio', tipo: 'Deviazione procedurale', grav: 'alta', desc: 'Utilizzo pigmento senza registrazione nel registro esposti', proc: 'p3', azione: 'Registrazione retroattiva, audit procedura, verifica accessi', resp: 'RSPP', scadAzione: daysFromNow(-5), stato: 'chiusa' }
-  ];
-
-  db.fasi = [
-    { id: 'f1', cod: 'F-01', ordine: 1, nome: 'Ricezione e stoccaggio materie prime', reparto: 'Magazzino', tipo: 'Ricezione materiali', mansioni: 'Magazziniere, Responsabile acquisti', macchine: 'Transpallet, scaffalature', sostanze: 'Solventi, resine, pigmenti', procedure: ['p4'], rischi: ['r1'], note: 'Verificare SDS allegata a ogni consegna. Stoccaggio solventi in area ATEX dedicata.', data: t },
-    { id: 'f2', cod: 'F-02', ordine: 2, nome: 'Pesatura materie prime', reparto: 'Miscelazione', tipo: 'Avvio lavorazione', mansioni: 'Operatore miscelazione', macchine: 'Bilancia industriale', sostanze: 'Solventi organici, pigmenti', procedure: ['p1'], rischi: ['r1','r2'], note: 'Ogni pesatura registrata su foglio di lavorazione. Attivare ventilazione prima di aprire contenitori.', data: t },
-    { id: 'f3', cod: 'F-03', ordine: 3, nome: 'Miscelazione / Dispersione', reparto: 'Miscelazione', tipo: 'Lavorazione continua', mansioni: 'Operatore miscelazione, Capo turno', macchine: 'Dispersore D1, Dispersore D2', sostanze: 'Solventi organici, pigmenti, resine', procedure: ['p1','p2'], rischi: ['r1','r2','r4'], note: 'Velocità e tempi secondo scheda tecnica prodotto. DPI obbligatori per tutta la fase.', data: t },
-    { id: 'f4', cod: 'F-04', ordine: 4, nome: 'Controllo qualità in processo', reparto: 'Laboratorio', tipo: 'Controllo qualità', mansioni: 'Tecnico laboratorio', macchine: 'Viscosimetro, spettrofotometro', sostanze: 'Campioni prodotto, solventi analisi', procedure: ['p3'], rischi: ['r1','r3'], note: 'Campionamento con DPI. Registrazione valori su scheda QC.', data: t },
-    { id: 'f5', cod: 'F-05', ordine: 5, nome: 'Confezionamento e etichettatura', reparto: 'Confezionamento', tipo: 'Lavorazione continua', mansioni: 'Operatore confezionamento', macchine: 'Riempitrice, etichettatrice', sostanze: 'Prodotto finito', procedure: [], rischi: ['r1'], note: '', data: t },
-    { id: 'f6', cod: 'F-06', ordine: 6, nome: 'Pulizia linea / cambio prodotto', reparto: 'Miscelazione', tipo: 'Cambio prodotto / pulizia', mansioni: 'Operatore miscelazione', macchine: 'Dispersore D1, Dispersore D2, impianto lavaggio', sostanze: 'Solventi pulizia, rifiuti produzione', procedure: ['p1'], rischi: ['r1','r2'], note: 'Operazione critica: massima esposizione solventi. Ventilazione forzata obbligatoria.', data: t }
-  ];
-
-  saveDB();
+function renderNC() {
+  const container = document.getElementById('nc-list');
+  if (!state.nc.length) {
+    container.innerHTML = '<span class="text2">Nessuna NC registrata</span>';
+    return;
+  }
+  let html = '<table><thead><tr>' +
+    '<th>Data</th><th>Reparto</th><th>Tipo</th><th>Gravità</th><th>Scadenza</th><th>Stato</th>' +
+    '</tr></thead><tbody>';
+  state.nc.slice().sort((a,b) => (a.data || '').localeCompare(b.data || '')).forEach(n => {
+    const d = daysDiff(n.scad);
+    let stato = n.stato || 'aperta';
+    let badge = 'badge-neutral';
+    if (stato === 'aperta') badge = 'badge-danger';
+    if (stato === 'chiusa') badge = 'badge-ok';
+    let scadTag = '';
+    if (d !== null) {
+      if (d < 0) scadTag = `<span class="badge badge-danger">Scaduta</span>`;
+      else if (d <= 7) scadTag = `<span class="badge badge-warn">${d} gg</span>`;
+      else scadTag = `<span class="badge badge-neutral">${d} gg</span>`;
+    }
+    html += `<tr>
+      <td>${formatDate(n.data)}</td>
+      <td>${n.reparto}</td>
+      <td>${n.tipo}</td>
+      <td>${n.grav}</td>
+      <td>${formatDate(n.scad)} ${scadTag}</td>
+      <td><span class="badge ${badge}">${stato}</span></td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
 }
 
-// ============================================================
-// UTILS
-// ============================================================
-function today() { return new Date().toISOString().split('T')[0]; }
-function daysFromNow(n) {
-  const d = new Date();
-  d.setDate(d.getDate() + n);
-  return d.toISOString().split('T')[0];
-}
-function fmtDate(s) {
-  if (!s) return '—';
-  const [y,m,d] = s.split('-');
-  return `${d}/${m}/${y}`;
-}
-function daysLeft(s) {
-  if (!s) return null;
-  return Math.round((new Date(s) - new Date()) / 86400000);
-}
-function uid() { return Math.random().toString(36).slice(2,9); }
-
-function scadenzaStatus(data) {
-  const d = daysLeft(data);
-  if (d === null) return 'neutral';
-  if (d < 0) return 'danger';
-  if (d <= 30) return 'warn';
-  return 'ok';
-}
-
-// ============================================================
-// NAV
-// ============================================================
-function switchTab(tab, btn) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-  if (btn) btn.classList.add('active');
-  renderSidebar(tab);
-  renderTab(tab);
+function renderScadenze() {
+  const container = document.getElementById('scadenze-list');
+  if (!state.scadenze.length) {
+    container.innerHTML = '<span class="text2">Nessuna scadenza registrata</span>';
+    return;
+  }
+  let html = '<table><thead><tr>' +
+    '<th>Data</th><th>Titolo</th><th>Categoria</th><th>Responsabile</th><th>Stato</th>' +
+    '</tr></thead><tbody>';
+  state.scadenze.slice().sort((a,b) => (a.data || '').localeCompare(b.data || '')).forEach(s => {
+    const d = daysDiff(s.data);
+    let badge = 'badge-neutral';
+    let label = '';
+    if (d !== null) {
+      if (d < 0) { badge = 'badge-danger'; label = 'Scaduta'; }
+      else if (d <= 7) { badge = 'badge-warn'; label = d + ' gg'; }
+      else { badge = 'badge-neutral'; label = d + ' gg'; }
+    }
+    html += `<tr>
+      <td>${formatDate(s.data)}</td>
+      <td>${s.titolo}</td>
+      <td>${s.cat}</td>
+      <td>${s.resp || ''}</td>
+      <td><span class="badge ${badge}">${label}</span></td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
 }
 
-function renderTab(tab) {
-  if (tab === 'dashboard') renderDashboard();
-  if (tab === 'processo') renderProcesso();
-  if (tab === 'procedure') renderProcedure();
-  if (tab === 'rischi') renderRischi();
-  if (tab === 'formazione') renderFormazione();
-  if (tab === 'scadenze') renderScadenze();
-  if (tab === 'nc') renderNC();
+function renderFormazione() {
+  const container = document.getElementById('formazione-list');
+  if (!state.formazione.length) {
+    container.innerHTML = '<span class="text2">Nessuna formazione registrata</span>';
+    return;
+  }
+  let html = '<table><thead><tr>' +
+    '<th>Lavoratore</th><th>Mansione</th><th>Modulo</th><th>Data</th><th>Scadenza</th>' +
+    '</tr></thead><tbody>';
+  state.formazione.forEach(f => {
+    const d = daysDiff(f.scad);
+    let badge = 'badge-neutral';
+    let label = '';
+    if (d !== null) {
+      if (d < 0) { badge = 'badge-danger'; label = 'Scaduta'; }
+      else if (d <= 60) { badge = 'badge-warn'; label = d + ' gg'; }
+      else { badge = 'badge-neutral'; label = d + ' gg'; }
+    }
+    html += `<tr>
+      <td>${f.nome}</td>
+      <td>${f.mansione || ''}</td>
+      <td>${f.modulo}</td>
+      <td>${formatDate(f.data)}</td>
+      <td>${formatDate(f.scad)} <span class="badge ${badge}">${label}</span></td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+function renderProcedure() {
+  const container = document.getElementById('procedure-list');
+  if (!state.procedure.length) {
+    container.innerHTML = '<span class="text2">Nessuna procedura registrata</span>';
+    return;
+  }
+  let html = '<table><thead><tr>' +
+    '<th>Titolo</th><th>Reparto</th><th>Rischio</th><th>DPI</th>' +
+    '</tr></thead><tbody>';
+  state.procedure.forEach(p => {
+    html += `<tr>
+      <td>${p.titolo}</td>
+      <td>${p.reparto || ''}</td>
+      <td>${p.rischio || ''}</td>
+      <td>${p.dpi || ''}</td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+function renderRischi() {
+  const container = document.getElementById('rischi-list');
+  if (!state.rischi.length) {
+    container.innerHTML = '<span class="text2">Nessun rischio registrato</span>';
+    return;
+  }
+  let html = '<table><thead><tr>' +
+    '<th>Agente</th><th>Reparto</th><th>Livello</th><th>Misure</th><th>Procedura</th>' +
+    '</tr></thead><tbody>';
+  state.rischi.forEach(r => {
+    let badge = 'badge-neutral';
+    if (r.livello === 'alto') badge = 'badge-danger';
+    if (r.livello === 'medio') badge = 'badge-warn';
+    if (r.livello === 'basso') badge = 'badge-ok';
+    html += `<tr>
+      <td>${r.agente}</td>
+      <td>${r.reparto || ''}</td>
+      <td><span class="badge ${badge}">${r.livello}</span></td>
+      <td>${r.misure || ''}</td>
+      <td>${r.proc || '<span class="text2">nessuna</span>'}</td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+function renderSidebar() {
+  const ncOpen = state.nc.filter(n => n.stato === 'aperta').length;
+  const scad30 = state.scadenze.filter(s => {
+    const d = daysDiff(s.data);
+    return d !== null && d >= 0 && d <= 30;
+  }).length;
+  const formScad = state.formazione.filter(f => {
+    const d = daysDiff(f.scad);
+    return d !== null && d >= 0 && d <= 60;
+  }).length;
+  const riskGap = state.rischi.filter(r => !r.proc || !r.proc.trim()).length;
+
+  document.getElementById('sb-nc-open').textContent = ncOpen;
+  document.getElementById('sb-scad-30').textContent = scad30;
+  document.getElementById('sb-form-scad').textContent = formScad;
+  document.getElementById('sb-risk-gap').textContent = riskGap;
 }
 
 function renderAll() {
   renderDashboard();
-  renderSidebar('dashboard');
+  renderNC();
+  renderScadenze();
+  renderFormazione();
+  renderProcedure();
+  renderRischi();
+  renderSidebar();
 }
 
-// ============================================================
-// SIDEBAR
-// ============================================================
-function renderSidebar(tab) {
-  const s = document.getElementById('sidebar');
-  let html = '';
-
-  if (tab === 'processo') {
-    const totFasi = db.fasi.length;
-    const conProc = db.fasi.filter(f=>f.procedure&&f.procedure.length>0).length;
-    const gap = totFasi - conProc;
-    html += `<div class="sidebar-section"><div class="sidebar-label">Copertura</div>
-      <div class="sidebar-item"><span class="sidebar-item-label">Fasi coperte</span><span class="badge badge-ok">${conProc}</span></div>
-      <div class="sidebar-item"><span class="sidebar-item-label">Gap procedurali</span><span class="badge ${gap>0?'badge-danger':'badge-ok'}">${gap}</span></div>
-    </div>`;
-    const tipi = [...new Set(db.fasi.map(f=>f.tipo).filter(Boolean))];
-    html += `<div class="sidebar-section"><div class="sidebar-label">Tipo fase</div>`;
-    tipi.forEach(tp => {
-      html += `<div class="sidebar-item"><span class="sidebar-item-label" style="font-size:11px">${tp}</span><span class="badge badge-neutral">${db.fasi.filter(f=>f.tipo===tp).length}</span></div>`;
-    });
-    html += `</div>`;
-  }
-
-  if (tab === 'dashboard' || tab === 'procedure') {
-    const reparti = [...new Set(db.procedure.map(p => p.reparto).filter(Boolean))];
-    html += `<div class="sidebar-section"><div class="sidebar-label">Reparti</div>`;
-    reparti.forEach(r => {
-      const count = db.procedure.filter(p => p.reparto === r && p.stato === 'vigente').length;
-      html += `<div class="sidebar-item" onclick="filterProcByReparto('${r}')"><span class="sidebar-item-label">${r}</span><span class="badge badge-neutral">${count}</span></div>`;
-    });
-    html += `</div>`;
-
-    html += `<div class="sidebar-section"><div class="sidebar-label">Stato</div>
-      <div class="sidebar-item" onclick="filterProcByStato('vigente')"><span class="sidebar-item-label">Vigenti</span><span class="badge badge-ok">${db.procedure.filter(p=>p.stato==='vigente').length}</span></div>
-      <div class="sidebar-item" onclick="filterProcByStato('revisione')"><span class="sidebar-item-label">In revisione</span><span class="badge badge-warn">${db.procedure.filter(p=>p.stato==='revisione').length}</span></div>
-      <div class="sidebar-item" onclick="filterProcByStato('bozza')"><span class="sidebar-item-label">Bozze</span><span class="badge badge-neutral">${db.procedure.filter(p=>p.stato==='bozza').length}</span></div>
-    </div>`;
-  }
-
-  if (tab === 'rischi') {
-    html += `<div class="sidebar-section"><div class="sidebar-label">Livello</div>
-      <div class="sidebar-item"><span class="sidebar-item-label">Alto</span><span class="badge badge-danger">${db.rischi.filter(r=>r.livello==='alto').length}</span></div>
-      <div class="sidebar-item"><span class="sidebar-item-label">Medio</span><span class="badge badge-warn">${db.rischi.filter(r=>r.livello==='medio').length}</span></div>
-      <div class="sidebar-item"><span class="sidebar-item-label">Basso</span><span class="badge badge-ok">${db.rischi.filter(r=>r.livello==='basso').length}</span></div>
-    </div>`;
-    const cats = [...new Set(db.rischi.map(r=>r.cat))];
-    html += `<div class="sidebar-section"><div class="sidebar-label">Categoria</div>`;
-    cats.forEach(c => {
-      html += `<div class="sidebar-item"><span class="sidebar-item-label">${c}</span><span class="badge badge-neutral">${db.rischi.filter(r=>r.cat===c).length}</span></div>`;
-    });
-    html += `</div>`;
-  }
-
-  if (tab === 'scadenze') {
-    const scad = db.scadenze;
-    html += `<div class="sidebar-section"><div class="sidebar-label">Stato</div>
-      <div class="sidebar-item"><span class="sidebar-item-label">Scadute</span><span class="badge badge-danger">${scad.filter(s=>daysLeft(s.data)<0).length}</span></div>
-      <div class="sidebar-item"><span class="sidebar-item-label">Entro 30gg</span><span class="badge badge-warn">${scad.filter(s=>{const d=daysLeft(s.data);return d>=0&&d<=30;}).length}</span></div>
-      <div class="sidebar-item"><span class="sidebar-item-label">OK</span><span class="badge badge-ok">${scad.filter(s=>daysLeft(s.data)>30).length}</span></div>
-    </div>`;
-  }
-
-  if (tab === 'nc') {
-    html += `<div class="sidebar-section"><div class="sidebar-label">Stato</div>
-      <div class="sidebar-item"><span class="sidebar-item-label">Aperte</span><span class="badge badge-danger">${db.nc.filter(n=>n.stato==='aperta').length}</span></div>
-      <div class="sidebar-item"><span class="sidebar-item-label">Chiuse</span><span class="badge badge-ok">${db.nc.filter(n=>n.stato==='chiusa').length}</span></div>
-    </div>`;
-    html += `<div class="sidebar-section"><div class="sidebar-label">Gravità</div>
-      <div class="sidebar-item"><span class="sidebar-item-label">Alta</span><span class="badge badge-danger">${db.nc.filter(n=>n.grav==='alta'&&n.stato==='aperta').length}</span></div>
-      <div class="sidebar-item"><span class="sidebar-item-label">Media</span><span class="badge badge-warn">${db.nc.filter(n=>n.grav==='media'&&n.stato==='aperta').length}</span></div>
-    </div>`;
-  }
-
-  if (tab === 'formazione') {
-    const reparti = [...new Set(db.workers.map(w=>w.reparto).filter(Boolean))];
-    html += `<div class="sidebar-section"><div class="sidebar-label">Reparti</div>`;
-    reparti.forEach(r => {
-      html += `<div class="sidebar-item"><span class="sidebar-item-label">${r}</span><span class="badge badge-neutral">${db.workers.filter(w=>w.reparto===r).length}</span></div>`;
-    });
-    html += `</div>`;
-  }
-
-  s.innerHTML = html;
-}
-
-// ============================================================
-// PROCESSO
-// ============================================================
-function renderProcesso() {
-  const fasi = [...db.fasi].sort((a,b)=>a.ordine-b.ordine);
-  const totFasi = fasi.length;
-  const coperte = fasi.filter(f=>f.procedure&&f.procedure.length>0).length;
-  const gap = totFasi - coperte;
-  const pct = totFasi ? Math.round(coperte/totFasi*100) : 0;
-
-  // Gap bar
-  const gapColor = gap===0?'var(--ok)':gap<=2?'var(--warn)':'var(--danger)';
-  document.getElementById('processo-gap-bar').innerHTML = `
-    <div class="card">
-      <div class="card-body" style="padding:14px 16px">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <div style="font-family:var(--mono);font-size:11px;color:var(--text3)">COPERTURA PROCEDURALE</div>
-          <div style="display:flex;gap:16px;align-items:center">
-            <span style="font-family:var(--mono);font-size:11px;color:var(--text2)">${coperte}/${totFasi} fasi coperte</span>
-            ${gap>0?`<span class="pill pill-danger">${gap} GAP PROCEDURAL${gap===1?'E':'I'}</span>`:'<span class="pill pill-ok">COPERTURA COMPLETA</span>'}
-            <span style="font-family:var(--mono);font-size:20px;font-weight:600;color:${gapColor}">${pct}%</span>
-          </div>
-        </div>
-        <div class="progress-bar" style="height:6px">
-          <div class="progress-fill" style="width:${pct}%;background:${gapColor}"></div>
-        </div>
-      </div>
-    </div>`;
-
-  // Fasi
-  let html = '';
-  if (!fasi.length) {
-    html = '<div class="text3" style="padding:24px;text-align:center;font-size:12px">Nessuna fase di processo definita</div>';
-  }
-
-  fasi.forEach((f, idx) => {
-    const procs = (f.procedure||[]).map(pid => db.procedure.find(p=>p.id===pid)).filter(Boolean);
-    const rischi = (f.rischi||[]).map(rid => db.rischi.find(r=>r.id===rid)).filter(Boolean);
-    const hasGap = procs.length === 0;
-    const hasRevProc = procs.some(p=>p.stato==='revisione'||p.stato==='bozza');
-    const ncFase = db.nc.filter(n=>n.stato==='aperta'&&n.reparto===f.reparto).length;
-
-    const borderColor = hasGap ? 'var(--danger)' : hasRevProc ? 'var(--warn)' : 'var(--border)';
-
-    // Connector line
-    const connector = idx < fasi.length-1 ? `<div style="width:2px;height:16px;background:var(--border);margin:0 auto 0 23px"></div>` : '';
-
-    html += `
-    <div style="display:flex;gap:0;align-items:flex-start">
-      <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;margin-right:12px;margin-top:14px">
-        <div style="width:32px;height:32px;border-radius:50%;background:${hasGap?'var(--danger)':hasRevProc?'var(--warn)':'var(--bg3)'};border:2px solid ${hasGap?'var(--danger)':hasRevProc?'var(--warn)':'var(--border2)'};display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:${hasGap?'#fff':hasRevProc?'#000':'var(--text2)'}">
-          ${String(f.ordine).padStart(2,'0')}
-        </div>
-        ${connector}
-      </div>
-      <div style="flex:1;margin-bottom:${idx<fasi.length-1?'0':'0'}">
-        <div class="card" style="border-left:3px solid ${borderColor};margin-bottom:4px">
-          <div class="card-header" onclick="viewFase('${f.id}')">
-            <div style="flex:1">
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-                <span class="mono" style="font-size:10px;color:var(--text3)">${f.cod}</span>
-                <span class="pill pill-info" style="font-size:9px">${f.tipo||'—'}</span>
-                <span style="font-size:11px;color:var(--text2)">${f.reparto||'—'}</span>
-                ${hasGap?'<span class="pill pill-danger">NESSUNA PROCEDURA</span>':''}
-                ${hasRevProc&&!hasGap?'<span class="pill pill-warn">PROC. IN REVISIONE</span>':''}
-                ${ncFase>0?`<span class="pill pill-danger">${ncFase} NC APERTA${ncFase>1?'E':''}</span>`:''}
-              </div>
-              <div class="card-title">${f.nome}</div>
-              <div style="font-size:11px;color:var(--text2);margin-top:3px">${f.mansioni||'—'}</div>
-            </div>
-            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-              <div style="display:flex;gap:6px">
-                ${procs.map(p=>`<span class="mono" style="font-size:10px;padding:2px 6px;border:1px solid ${p.stato==='vigente'?'var(--ok)':p.stato==='revisione'?'var(--warn)':'var(--border2)'};color:${p.stato==='vigente'?'var(--ok)':p.stato==='revisione'?'var(--warn)':'var(--text3)'};border-radius:2px">${p.cod}</span>`).join('')}
-                ${hasGap?'<span style="font-size:10px;color:var(--danger)">— nessuna —</span>':''}
-              </div>
-              <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteFase('${f.id}')">✕</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>`;
-  });
-
-  document.getElementById('processo-list').innerHTML = html;
-}
-
-function viewFase(id) {
-  const f = db.fasi.find(x=>x.id===id);
-  if (!f) return;
-  document.getElementById('view-fase-title').textContent = `${f.cod} — ${f.nome}`;
-
-  const procs = (f.procedure||[]).map(pid=>db.procedure.find(p=>p.id===pid)).filter(Boolean);
-  const rischi = (f.rischi||[]).map(rid=>db.rischi.find(r=>r.id===rid)).filter(Boolean);
-
-  const procRows = procs.length ? procs.map(p=>`
-    <tr>
-      <td class="mono" style="font-size:11px">${p.cod}</td>
-      <td>${p.titolo}</td>
-      <td><span class="pill ${p.stato==='vigente'?'pill-ok':p.stato==='revisione'?'pill-warn':'pill-neutral'}">${p.stato.toUpperCase()}</span></td>
-      <td class="mono" style="font-size:11px">${fmtDate(p.nextrev)}</td>
-    </tr>`).join('') :
-    `<tr><td colspan="4" style="color:var(--danger);font-size:12px;padding:12px">⚠ Nessuna procedura collegata — GAP PROCEDURALE</td></tr>`;
-
-  const rischiRows = rischi.map(r=>`
-    <tr>
-      <td>${r.agente}</td>
-      <td><span class="pill pill-info">${r.cat}</span></td>
-      <td><span class="risk-${r.livello}">${r.livello.toUpperCase()}</span></td>
-    </tr>`).join('') || `<tr><td colspan="3" class="text3">Nessun rischio associato</td></tr>`;
-
-  document.getElementById('view-fase-body').innerHTML = `
-    <div class="grid-3 mb-16">
-      <div><div class="form-label">Tipo fase</div><div style="font-size:12px">${f.tipo||'—'}</div></div>
-      <div><div class="form-label">Reparto</div><div style="font-size:12px">${f.reparto||'—'}</div></div>
-      <div><div class="form-label">Sequenza</div><div class="mono" style="font-size:12px">${String(f.ordine).padStart(2,'0')}</div></div>
-    </div>
-    <div class="grid-2 mb-16">
-      <div><div class="form-label">Mansioni coinvolte</div><div style="font-size:12px">${f.mansioni||'—'}</div></div>
-      <div><div class="form-label">Macchine / impianti</div><div style="font-size:12px">${f.macchine||'—'}</div></div>
-    </div>
-    <div class="form-group">
-      <div class="form-label">Sostanze / materiali critici</div>
-      <div class="chip-group">${(f.sostanze||'').split(',').map(s=>`<span class="chip">${s.trim()}</span>`).join('')}</div>
-    </div>
-    <hr class="divider">
-    <div class="form-label" style="margin-bottom:8px">PROCEDURE COLLEGATE</div>
-    <table style="margin-bottom:16px">
-      <thead><tr><th>Codice</th><th>Titolo</th><th>Stato</th><th>Prossima rev.</th></tr></thead>
-      <tbody>${procRows}</tbody>
-    </table>
-    <div class="form-label" style="margin-bottom:8px">RISCHI ASSOCIATI</div>
-    <table>
-      <thead><tr><th>Agente</th><th>Categoria</th><th>Livello</th></tr></thead>
-      <tbody>${rischiRows}</tbody>
-    </table>
-    ${f.note?`<hr class="divider"><div class="form-label">Note operative</div><div style="font-size:12px;color:var(--text2);margin-top:6px">${f.note}</div>`:''}
-  `;
-  openModal('modal-view-fase');
-}
-
-function deleteFase(id) {
-  if (!confirm('Eliminare questa fase?')) return;
-  db.fasi = db.fasi.filter(f=>f.id!==id);
-  saveDB(); renderProcesso(); renderDashboard();
-}
-
-function saveFase() {
-  const procChecks = document.querySelectorAll('#fase-proc-checks input[type=checkbox]:checked');
-  const rischiChecks = document.querySelectorAll('#fase-rischi-checks input[type=checkbox]:checked');
-  const f = {
-    id: uid(),
-    cod: document.getElementById('fase-cod').value,
-    ordine: parseInt(document.getElementById('fase-ordine').value)||db.fasi.length+1,
-    nome: document.getElementById('fase-nome').value,
-    reparto: document.getElementById('fase-reparto').value,
-    tipo: document.getElementById('fase-tipo').value,
-    mansioni: document.getElementById('fase-mansioni').value,
-    macchine: document.getElementById('fase-macchine').value,
-    sostanze: document.getElementById('fase-sostanze').value,
-    procedure: [...procChecks].map(c=>c.value),
-    rischi: [...rischiChecks].map(c=>c.value),
-    note: document.getElementById('fase-note').value,
-    data: today()
-  };
-  if (!f.nome) { alert('Nome fase obbligatorio'); return; }
-  db.fasi.push(f);
-  saveDB(); closeModal('modal-new-fase'); renderProcesso(); renderDashboard();
-  clearForm(['fase-cod','fase-nome','fase-mansioni','fase-macchine','fase-sostanze','fase-note']);
-}
-
-// ============================================================
-// DASHBOARD
-// ============================================================
-function renderDashboard() {
-  const proc_ok = db.procedure.filter(p=>p.stato==='vigente').length;
-  const rischi_alti = db.rischi.filter(r=>r.livello==='alto').length;
-  const form_scad = getFormScadenti().length;
-  const scad_crit = db.scadenze.filter(s=>daysLeft(s.data)<=30).length;
-  const gap_fasi = db.fasi.filter(f=>!f.procedure||f.procedure.length===0).length;
-
-  document.getElementById('stat-procedure').innerHTML = `
-    <div class="stat-label">Procedure vigenti</div>
-    <div class="stat-value" style="color:var(--ok)">${proc_ok}</div>
-    <div class="stat-sub">${db.procedure.filter(p=>p.stato==='revisione').length} in revisione · ${db.procedure.filter(p=>p.stato==='bozza').length} bozze</div>`;
-
-  document.getElementById('stat-rischi').innerHTML = `
-    <div class="stat-label">Gap procedurali</div>
-    <div class="stat-value" style="color:${gap_fasi>0?'var(--danger)':'var(--ok)'}">${gap_fasi}</div>
-    <div class="stat-sub">${db.fasi.length} fasi · ${db.fasi.length-gap_fasi} coperte</div>`;
-
-  document.getElementById('stat-formazione').innerHTML = `
-    <div class="stat-label">Formazione in scadenza</div>
-    <div class="stat-value" style="color:${form_scad>0?'var(--warn)':'var(--ok)'}">${form_scad}</div>
-    <div class="stat-sub">su ${db.workers.length} lavoratori</div>`;
-
-  document.getElementById('stat-scadenze').innerHTML = `
-    <div class="stat-label">Scadenze critiche</div>
-    <div class="stat-value" style="color:${scad_crit>0?'var(--danger)':'var(--ok)'}">${scad_crit}</div>
-    <div class="stat-sub">${db.scadenze.filter(s=>daysLeft(s.data)<0).length} già scadute</div>`;
-
-  // Alert critici
-  let alerts = '';
-  db.scadenze.filter(s=>daysLeft(s.data)<0).forEach(s => {
-    alerts += `<div class="alert-bar alert-bar-danger">⚠ SCADUTO: ${s.titolo} — ${fmtDate(s.data)}</div>`;
-  });
-  db.nc.filter(n=>n.grav==='alta'&&n.stato==='aperta').forEach(n => {
-    alerts += `<div class="alert-bar alert-bar-danger">⚠ NC ALTA: ${n.tipo} · ${n.reparto} — ${fmtDate(n.data)}</div>`;
-  });
-  document.getElementById('alert-container').innerHTML = alerts;
-
-  // Scadenze critiche
-  const scadCrit = db.scadenze.filter(s=>daysLeft(s.data)<=30&&daysLeft(s.data)>=0);
-  document.getElementById('badge-scadenze-crit').textContent = scadCrit.length;
-  let scHtml = '';
-  if (!scadCrit.length) { scHtml = '<div class="text3" style="font-size:12px;padding:4px 0">Nessuna scadenza imminente</div>'; }
-  scadCrit.forEach(s => {
-    const d = daysLeft(s.data);
-    scHtml += `<div class="timeline-item">
-      <div class="timeline-dot ${d<=10?'dot-danger':'dot-warn'}"></div>
-      <div class="timeline-content">
-        <div class="timeline-title">${s.titolo}</div>
-        <div class="timeline-meta">${s.cat} · scade ${fmtDate(s.data)} · tra ${d}gg</div>
-      </div>
-    </div>`;
-  });
-  document.getElementById('scadenze-crit-list').innerHTML = scHtml;
-
-  // Procedure in revisione
-  const procRev = db.procedure.filter(p=>p.stato==='revisione'||p.stato==='bozza');
-  document.getElementById('badge-proc-rev').textContent = procRev.length;
-  let prHtml = '';
-  if (!procRev.length) { prHtml = '<div class="text3" style="font-size:12px;padding:4px 0">Tutte le procedure sono aggiornate</div>'; }
-  procRev.forEach(p => {
-    prHtml += `<div class="timeline-item">
-      <div class="timeline-dot dot-warn"></div>
-      <div class="timeline-content">
-        <div class="timeline-title">${p.cod} — ${p.titolo}</div>
-        <div class="timeline-meta">${p.reparto} · ${p.stato.toUpperCase()} · rev.${p.rev}</div>
-      </div>
-    </div>`;
-  });
-  document.getElementById('proc-rev-list').innerHTML = prHtml;
-
-  // NC aperte
-  const ncOpen = db.nc.filter(n=>n.stato==='aperta');
-  document.getElementById('badge-nc-open').textContent = ncOpen.length;
-  let ncHtml = '';
-  if (!ncOpen.length) { ncHtml = '<div class="text3" style="font-size:12px;padding:4px 0">Nessuna NC aperta</div>'; }
-  ncOpen.forEach(n => {
-    ncHtml += `<div class="timeline-item">
-      <div class="timeline-dot ${n.grav==='alta'?'dot-danger':n.grav==='media'?'dot-warn':'dot-off'}"></div>
-      <div class="timeline-content">
-        <div class="timeline-title">${n.tipo} · ${n.reparto}</div>
-        <div class="timeline-meta">${fmtDate(n.data)} · Azione: entro ${fmtDate(n.scadAzione)}</div>
-      </div>
-    </div>`;
-  });
-  document.getElementById('nc-open-list').innerHTML = ncHtml;
-
-  // Formazione in scadenza
-  const fs = getFormScadenti();
-  document.getElementById('badge-form-scad').textContent = fs.length;
-  let fsHtml = '';
-  if (!fs.length) { fsHtml = '<div class="text3" style="font-size:12px;padding:4px 0">Nessuna formazione in scadenza</div>'; }
-  fs.forEach(f => {
-    fsHtml += `<div class="timeline-item">
-      <div class="timeline-dot dot-warn"></div>
-      <div class="timeline-content">
-        <div class="timeline-title">${f.worker} — ${f.corso}</div>
-        <div class="timeline-meta">scade ${fmtDate(f.scad)} · tra ${daysLeft(f.scad)}gg</div>
-      </div>
-    </div>`;
-  });
-  document.getElementById('form-scad-list').innerHTML = fsHtml;
-}
-
-function getFormScadenti() {
-  const result = [];
-  db.workers.forEach(w => {
-    if (!w.formazioni) return;
-    w.formazioni.split('\n').forEach(line => {
-      const parts = line.split('|').map(x=>x.trim());
-      if (parts.length >= 3) {
-        const d = daysLeft(parts[2]);
-        if (d !== null && d <= 90 && d >= 0) {
-          result.push({ worker: w.nome, corso: parts[0], scad: parts[2] });
-        }
-      }
-    });
-    // sorveglianza sanitaria
-    if (w.sorveglianza) {
-      const d = daysLeft(w.sorveglianza);
-      if (d !== null && d <= 90 && d >= 0) {
-        result.push({ worker: w.nome, corso: 'Sorveglianza sanitaria', scad: w.sorveglianza });
-      }
-    }
-  });
-  return result;
-}
-
-// ============================================================
-// PROCEDURE
-// ============================================================
-let procFilter = null;
-
-function filterProcByReparto(r) { procFilter = {key:'reparto', val:r}; switchToTab('procedure'); renderProcedure(); }
-function filterProcByStato(s) { procFilter = {key:'stato', val:s}; switchToTab('procedure'); renderProcedure(); }
-
-function switchToTab(tab) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-  // attiva il bottone nav corrispondente
-  document.querySelectorAll('.nav-btn').forEach(b => {
-    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + tab + "'")) b.classList.add('active');
-  });
-  renderSidebar(tab);
-}
-
-function renderProcedure() {
-  let list = db.procedure;
-  if (procFilter) list = list.filter(p => p[procFilter.key] === procFilter.val);
-
-  let html = '';
-  if (!list.length) {
-    html = '<div class="text3" style="padding:24px;text-align:center;font-size:12px">Nessuna procedura trovata</div>';
-  }
-
-  list.forEach(p => {
-    const statoClass = p.stato === 'vigente' ? 'pill-ok' : p.stato === 'revisione' ? 'pill-warn' : 'pill-neutral';
-    const statoLabel = p.stato === 'vigente' ? 'VIGENTE' : p.stato === 'revisione' ? 'IN REVISIONE' : 'BOZZA';
-    const d = daysLeft(p.nextrev);
-    const revAlert = d !== null && d <= 30 ? `<span class="pill pill-warn">revisione tra ${d}gg</span>` : '';
-    html += `<div class="card">
-      <div class="card-header" onclick="viewProcedura('${p.id}')">
-        <div style="display:flex;flex-direction:column;flex:1;gap:4px">
-          <div style="display:flex;align-items:center;gap:10px">
-            <span class="mono" style="font-size:11px;color:var(--text3)">${p.cod} · rev.${p.rev}</span>
-            <span class="pill ${statoClass}">${statoLabel}</span>
-            ${revAlert}
-            <span class="pill pill-info">${p.rischio||'—'}</span>
-          </div>
-          <div class="card-title">${p.titolo}</div>
-          <div style="font-size:11px;color:var(--text2)">${p.reparto||'—'} · ${p.mansioni||'—'}</div>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center">
-          <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();deleteProcedura('${p.id}')">✕</button>
-        </div>
-      </div>
-    </div>`;
-  });
-
-  document.getElementById('procedure-list').innerHTML = html;
-}
-
-function viewProcedura(id) {
-  const p = db.procedure.find(x=>x.id===id);
-  if (!p) return;
-  document.getElementById('view-proc-title').textContent = `${p.cod} — ${p.titolo}`;
-  const steps = (p.steps||[]).map((s,i) => `<li class="step-item">
-    <span class="step-num">${String(i+1).padStart(2,'0')}</span>
-    <input type="checkbox" class="step-check" onchange="this.nextElementSibling.classList.toggle('checked',this.checked)">
-    <span class="step-text">${s}</span>
-  </li>`).join('');
-
-  document.getElementById('view-proc-body').innerHTML = `
-    <div class="grid-3 mb-16">
-      <div><div class="form-label">Reparto</div><div style="font-size:13px">${p.reparto||'—'}</div></div>
-      <div><div class="form-label">Revisione</div><div class="mono" style="font-size:13px">Rev. ${p.rev}</div></div>
-      <div><div class="form-label">Prossima revisione</div><div style="font-size:13px">${fmtDate(p.nextrev)}</div></div>
-    </div>
-    <div class="form-group">
-      <div class="form-label">Mansioni coinvolte</div>
-      <div style="font-size:12px">${p.mansioni||'—'}</div>
-    </div>
-    <div class="form-group">
-      <div class="form-label">DPI richiesti</div>
-      <div class="chip-group">${(p.dpi||'').split(',').map(d=>`<span class="chip">${d.trim()}</span>`).join('')}</div>
-    </div>
-    <hr class="divider">
-    <div class="form-label" style="margin-bottom:10px">PASSI OPERATIVI</div>
-    <ul class="step-list">${steps}</ul>
-    ${p.note ? `<hr class="divider"><div class="form-label">Note / Riferimenti normativi</div><div style="font-size:12px;color:var(--text2)">${p.note}</div>` : ''}
-  `;
-  openModal('modal-view-proc');
-}
-
-function deleteProcedura(id) {
-  if (!confirm('Eliminare questa procedura?')) return;
-  db.procedure = db.procedure.filter(p=>p.id!==id);
-  saveDB(); renderProcedure(); renderDashboard();
-}
-
-function saveProcedura() {
-  const steps = document.getElementById('proc-steps').value.split('\n').map(s=>s.replace(/^\d+\.\s*/,'')).filter(s=>s.trim());
-  const p = {
-    id: uid(), cod: document.getElementById('proc-cod').value,
-    rev: document.getElementById('proc-rev').value,
-    titolo: document.getElementById('proc-titolo').value,
-    reparto: document.getElementById('proc-reparto').value,
-    rischio: document.getElementById('proc-rischio').value,
-    mansioni: document.getElementById('proc-mansioni').value,
-    dpi: document.getElementById('proc-dpi').value,
-    steps, stato: document.getElementById('proc-stato').value,
-    nextrev: document.getElementById('proc-nextrev').value,
-    note: document.getElementById('proc-note').value,
-    data: today()
-  };
-  if (!p.titolo) { alert('Titolo obbligatorio'); return; }
-  db.procedure.push(p);
-  saveDB(); closeModal('modal-new-proc'); renderProcedure(); renderDashboard();
-  clearForm(['proc-cod','proc-rev','proc-titolo','proc-mansioni','proc-dpi','proc-steps','proc-note','proc-nextrev']);
-}
-
-// ============================================================
-// RISCHI
-// ============================================================
-function renderRischi() {
-  const html = db.rischi.length ? `
-    <table>
-      <thead><tr>
-        <th>Agente / Fattore</th>
-        <th>Categoria</th>
-        <th>Reparto</th>
-        <th>Livello</th>
-        <th>Procedura</th>
-        <th>Misure</th>
-        <th></th>
-      </tr></thead>
-      <tbody>${db.rischi.map(r => {
-        const proc = db.procedure.find(p=>p.id===r.proc);
-        return `<tr>
-          <td><div class="bold" style="font-size:12px">${r.agente}</div><div style="font-size:11px;color:var(--text3)">${r.mansioni||''}</div></td>
-          <td><span class="pill pill-info">${r.cat}</span></td>
-          <td>${r.reparto||'—'}</td>
-          <td><span class="risk-${r.livello}">${r.livello.toUpperCase()}</span></td>
-          <td>${proc ? `<span class="mono" style="font-size:11px">${proc.cod}</span>` : '<span class="text3">—</span>'}</td>
-          <td style="max-width:200px;font-size:11px;color:var(--text2)">${(r.misure||'').slice(0,80)}${r.misure&&r.misure.length>80?'...':''}</td>
-          <td><button class="btn btn-danger btn-sm" onclick="deleteRischio('${r.id}')">✕</button></td>
-        </tr>`;
-      }).join('')}</tbody>
-    </table>` : '<div class="text3" style="padding:24px;text-align:center;font-size:12px">Nessun rischio mappato</div>';
-
-  document.getElementById('rischi-list').innerHTML = `<div class="card"><div class="card-body" style="padding:0;overflow:auto">${html}</div></div>`;
-}
-
-function deleteRischio(id) {
-  if (!confirm('Eliminare questo rischio?')) return;
-  db.rischi = db.rischi.filter(r=>r.id!==id);
-  saveDB(); renderRischi(); renderDashboard();
-}
-
-function saveRischio() {
-  const r = {
-    id: uid(),
-    agente: document.getElementById('r-agente').value,
-    cat: document.getElementById('r-cat').value,
-    reparto: document.getElementById('r-reparto').value,
-    mansioni: document.getElementById('r-mansioni').value,
-    livello: document.getElementById('r-livello').value,
-    proc: document.getElementById('r-proc').value,
-    misure: document.getElementById('r-misure').value,
-    note: document.getElementById('r-note').value,
-    data: today()
-  };
-  if (!r.agente) { alert('Agente obbligatorio'); return; }
-  db.rischi.push(r);
-  saveDB(); closeModal('modal-new-rischio'); renderRischi(); renderDashboard();
-  clearForm(['r-agente','r-mansioni','r-misure','r-note']);
-}
-
-// ============================================================
-// FORMAZIONE
-// ============================================================
-function renderFormazione() {
-  let html = '';
-  db.workers.forEach(w => {
-    const sorvSt = scadenzaStatus(w.sorveglianza);
-    const formRows = (w.formazioni||'').split('\n').filter(l=>l.trim()).map(line => {
-      const p = line.split('|').map(x=>x.trim());
-      const corso = p[0]||'—'; const data = p[1]||''; const scad = p[2]||'';
-      const st = scadenzaStatus(scad);
-      const stLabel = st==='danger'?'SCADUTA':st==='warn'?'IN SCADENZA':'OK';
-      const stClass = st==='danger'?'pill-danger':st==='warn'?'pill-warn':'pill-ok';
-      return `<tr>
-        <td>${corso}</td>
-        <td class="mono" style="font-size:11px">${fmtDate(data)}</td>
-        <td class="mono" style="font-size:11px">${fmtDate(scad)}</td>
-        <td><span class="pill ${stClass}">${stLabel}</span></td>
-      </tr>`;
-    }).join('');
-
-    html += `<div class="card" style="margin-bottom:12px">
-      <div class="card-header" onclick="toggleCard(this)">
-        <div class="dot dot-${sorvSt}" style="flex-shrink:0"></div>
-        <div class="card-title">${w.nome}</div>
-        <span style="font-size:11px;color:var(--text2)">${w.mansione} · ${w.reparto}</span>
-        <span class="badge badge-neutral mono">${w.mat}</span>
-        <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteWorker('${w.id}')">✕</button>
-      </div>
-      <div class="card-body">
-        <div class="grid-3 mb-16">
-          <div><div class="form-label">Assunto il</div><div style="font-size:12px">${fmtDate(w.dataAss)}</div></div>
-          <div><div class="form-label">Sorveglianza sanitaria</div>
-            <div style="font-size:12px">${fmtDate(w.sorveglianza)} <span class="pill pill-${sorvSt==='ok'?'ok':sorvSt==='warn'?'warn':'danger'}">${sorvSt==='ok'?'OK':sorvSt==='warn'?'IN SCADENZA':'SCADUTA'}</span></div>
-          </div>
-          <div><div class="form-label">DPI assegnati</div><div class="chip-group">${(w.dpi||'').split(',').map(d=>`<span class="chip">${d.trim()}</span>`).join('')}</div></div>
-        </div>
-        <div class="form-label" style="margin-bottom:8px">Formazioni</div>
-        <table>
-          <thead><tr><th>Corso</th><th>Data</th><th>Scadenza</th><th>Stato</th></tr></thead>
-          <tbody>${formRows||'<tr><td colspan="4" class="text3">Nessuna formazione registrata</td></tr>'}</tbody>
-        </table>
-      </div>
-    </div>`;
-  });
-
-  if (!html) html = '<div class="text3" style="padding:24px;text-align:center;font-size:12px">Nessun lavoratore registrato</div>';
-  document.getElementById('formazione-list').innerHTML = html;
-}
-
-function deleteWorker(id) {
-  if (!confirm('Eliminare questo lavoratore?')) return;
-  db.workers = db.workers.filter(w=>w.id!==id);
-  saveDB(); renderFormazione(); renderDashboard();
-}
-
-function saveWorker() {
-  const w = {
-    id: uid(),
-    nome: document.getElementById('w-nome').value,
-    mat: document.getElementById('w-mat').value,
-    mansione: document.getElementById('w-mansione').value,
-    reparto: document.getElementById('w-reparto').value,
-    dataAss: document.getElementById('w-data-ass').value,
-    sorveglianza: document.getElementById('w-sorveglianza').value,
-    formazioni: document.getElementById('w-formazioni').value,
-    dpi: document.getElementById('w-dpi').value,
-    data: today()
-  };
-  if (!w.nome) { alert('Nome obbligatorio'); return; }
-  db.workers.push(w);
-  saveDB(); closeModal('modal-new-worker'); renderFormazione(); renderDashboard();
-  clearForm(['w-nome','w-mat','w-mansione','w-data-ass','w-sorveglianza','w-formazioni','w-dpi']);
-}
-
-// ============================================================
-// SCADENZE
-// ============================================================
-function renderScadenze() {
-  const sorted = [...db.scadenze].sort((a,b)=>new Date(a.data)-new Date(b.data));
-  let html = '';
-  if (!sorted.length) {
-    html = '<div class="text3" style="padding:24px;text-align:center;font-size:12px">Nessuna scadenza registrata</div>';
-  }
-  sorted.forEach(s => {
-    const d = daysLeft(s.data);
-    const st = scadenzaStatus(s.data);
-    const stLabel = d<0?`SCADUTA (${Math.abs(d)}gg fa)`:d===0?'OGGI':d<=30?`tra ${d}gg`:`tra ${d}gg`;
-    const stClass = st==='danger'?'pill-danger':st==='warn'?'pill-warn':'pill-ok';
-    html += `<div class="card">
-      <div class="card-header" onclick="toggleCard(this)">
-        <div class="dot dot-${st}"></div>
-        <div style="flex:1">
-          <div class="card-title">${s.titolo}</div>
-          <div style="font-size:11px;color:var(--text2);margin-top:3px">${s.cat} · ${s.norma||'—'} · resp: ${s.resp||'—'}</div>
-        </div>
-        <span class="pill ${stClass}">${stLabel}</span>
-        <span class="mono" style="font-size:11px;color:var(--text3)">${fmtDate(s.data)}</span>
-        <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();chiudiScadenza('${s.id}')">✓</button>
-        <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteScadenza('${s.id}')">✕</button>
-      </div>
-      ${s.note?`<div class="card-body hidden"><div style="font-size:12px;color:var(--text2)">${s.note}</div>${s.period?`<div class="mt-8" style="font-size:11px;color:var(--text3)">Periodicità: ${s.period}</div>`:''}</div>`:''}
-    </div>`;
-  });
-
-  document.getElementById('scadenze-list').innerHTML = html;
-}
-
-function chiudiScadenza(id) {
-  const s = db.scadenze.find(x=>x.id===id);
-  if (!s) return;
-  if (s.period) {
-    const months = s.period==='annuale'?12:s.period==='biennale'?24:60;
-    const nd = new Date(s.data);
-    nd.setMonth(nd.getMonth()+months);
-    s.data = nd.toISOString().split('T')[0];
-    s.stato = 'aperta';
-  } else {
-    db.scadenze = db.scadenze.filter(x=>x.id!==id);
-  }
-  saveDB(); renderScadenze(); renderDashboard();
-}
-
-function deleteScadenza(id) {
-  if (!confirm('Eliminare questa scadenza?')) return;
-  db.scadenze = db.scadenze.filter(s=>s.id!==id);
-  saveDB(); renderScadenze(); renderDashboard();
-}
-
-function saveScadenza() {
-  const s = {
-    id: uid(),
-    titolo: document.getElementById('s-titolo').value,
-    cat: document.getElementById('s-cat').value,
-    data: document.getElementById('s-data').value,
-    norma: document.getElementById('s-norma').value,
-    resp: document.getElementById('s-resp').value,
-    period: document.getElementById('s-period').value,
-    note: document.getElementById('s-note').value,
-    stato: 'aperta'
-  };
-  if (!s.titolo||!s.data) { alert('Titolo e data obbligatori'); return; }
-  db.scadenze.push(s);
-  saveDB(); closeModal('modal-new-scadenza'); renderScadenze(); renderDashboard();
-  clearForm(['s-titolo','s-data','s-norma','s-resp','s-note']);
-}
-
-// ============================================================
-// NON CONFORMITÀ
-// ============================================================
-function renderNC() {
-  const sorted = [...db.nc].sort((a,b)=>{
-    if (a.stato!==b.stato) return a.stato==='aperta'?-1:1;
-    return new Date(b.data)-new Date(a.data);
-  });
-  let html = '';
-  if (!sorted.length) {
-    html = '<div class="text3" style="padding:24px;text-align:center;font-size:12px">Nessuna non conformità registrata</div>';
-  }
-  sorted.forEach(n => {
-    const gravClass = n.grav==='alta'?'pill-danger':n.grav==='media'?'pill-warn':'pill-neutral';
-    const proc = db.procedure.find(p=>p.id===n.proc);
-    const azScad = daysLeft(n.scadAzione);
-    const azAlert = azScad!==null&&azScad<0&&n.stato==='aperta'?`<span class="pill pill-danger">AZIONE SCADUTA</span>`:'';
-    html += `<div class="card">
-      <div class="card-header" onclick="toggleCard(this)">
-        <div class="dot ${n.stato==='aperta'?(n.grav==='alta'?'dot-danger':n.grav==='media'?'dot-warn':'dot-off'):'dot-ok'}"></div>
-        <div style="flex:1">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
-            <span class="card-title">${n.tipo}</span>
-            <span class="pill ${gravClass}">${n.grav.toUpperCase()}</span>
-            <span class="pill ${n.stato==='aperta'?'pill-danger':'pill-ok'}">${n.stato.toUpperCase()}</span>
-            ${azAlert}
-          </div>
-          <div style="font-size:11px;color:var(--text2)">${n.reparto||'—'} · ${fmtDate(n.data)} · ${proc?'→ '+proc.cod:''}</div>
-        </div>
-        ${n.stato==='aperta'?`<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();chiudiNC('${n.id}')">CHIUDI</button>`:''}
-        <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteNC('${n.id}')">✕</button>
-      </div>
-      <div class="card-body hidden">
-        <div class="form-label mb-8">Descrizione</div>
-        <div style="font-size:12px;margin-bottom:12px">${n.desc||'—'}</div>
-        <div class="grid-2">
-          <div><div class="form-label">Azione correttiva</div><div style="font-size:12px">${n.azione||'—'}</div></div>
-          <div><div class="form-label">Responsabile / Scadenza</div><div style="font-size:12px">${n.resp||'—'} · entro ${fmtDate(n.scadAzione)}</div></div>
-        </div>
-      </div>
-    </div>`;
-  });
-
-  document.getElementById('nc-list').innerHTML = html;
-}
-
-function chiudiNC(id) {
-  const n = db.nc.find(x=>x.id===id);
-  if (n) { n.stato='chiusa'; saveDB(); renderNC(); renderDashboard(); }
-}
-
-function deleteNC(id) {
-  if (!confirm('Eliminare questa NC?')) return;
-  db.nc = db.nc.filter(n=>n.id!==id);
-  saveDB(); renderNC(); renderDashboard();
-}
-
-function saveNC() {
-  const n = {
-    id: uid(),
-    data: document.getElementById('nc-data').value || today(),
-    reparto: document.getElementById('nc-reparto').value,
-    tipo: document.getElementById('nc-tipo').value,
-    grav: document.getElementById('nc-grav').value,
-    desc: document.getElementById('nc-desc').value,
-    proc: document.getElementById('nc-proc').value,
-    azione: document.getElementById('nc-azione').value,
-    resp: document.getElementById('nc-resp').value,
-    scadAzione: document.getElementById('nc-scad-azione').value,
-    stato: 'aperta'
-  };
-  if (!n.desc) { alert('Descrizione obbligatoria'); return; }
-  db.nc.push(n);
-  saveDB(); closeModal('modal-new-nc'); renderNC(); renderDashboard();
-  clearForm(['nc-desc','nc-azione','nc-resp','nc-scad-azione']);
-}
-
-// ============================================================
-// UTILS UI
-// ============================================================
-function openModal(id) {
-  // Populate procedure selects in modals
-  const procSelects = ['r-proc','nc-proc'];
-  procSelects.forEach(sid => {
-    const sel = document.getElementById(sid);
-    if (!sel) return;
-    const cur = sel.value;
-    sel.innerHTML = '<option value="">— nessuna —</option>' +
-      db.procedure.filter(p=>p.stato==='vigente').map(p=>`<option value="${p.id}">${p.cod} — ${p.titolo}</option>`).join('');
-    sel.value = cur;
-  });
-
-  // Populate checkbox list for fase modal
-  if (id === 'modal-new-fase') {
-    const pc = document.getElementById('fase-proc-checks');
-    if (pc) pc.innerHTML = db.procedure.map(p=>`
-      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px">
-        <input type="checkbox" value="${p.id}" style="accent-color:var(--accent);width:14px;height:14px">
-        <span class="mono" style="color:var(--accent);font-size:10px">${p.cod}</span>
-        <span>${p.titolo}</span>
-        <span class="pill ${p.stato==='vigente'?'pill-ok':p.stato==='revisione'?'pill-warn':'pill-neutral'}" style="font-size:9px">${p.stato}</span>
-      </label>`).join('');
-    const rc = document.getElementById('fase-rischi-checks');
-    if (rc) rc.innerHTML = db.rischi.map(r=>`
-      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px">
-        <input type="checkbox" value="${r.id}" style="accent-color:var(--accent);width:14px;height:14px">
-        <span class="risk-${r.livello}" style="font-size:10px">${r.livello.toUpperCase()}</span>
-        <span>${r.agente}</span>
-        <span style="font-size:11px;color:var(--text2)">${r.cat}</span>
-      </label>`).join('');
-  }
-
-  document.getElementById(id).classList.add('active');
-}
-
-function closeModal(id) {
-  document.getElementById(id).classList.remove('active');
-}
-
-function toggleCard(header) {
-  const body = header.nextElementSibling;
-  if (body && body.classList.contains('card-body')) {
-    body.classList.toggle('hidden');
-  }
-}
-
-function clearForm(ids) {
-  ids.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
-  });
-}
-
-// Close modal on overlay click
-document.querySelectorAll('.modal-overlay').forEach(o => {
-  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('active'); });
-});
-
-// ============================================================
-// INIT
-// ============================================================
-function init() {
-  document.getElementById('currentDate').textContent = new Date().toLocaleDateString('it-IT', {weekday:'short', day:'2-digit', month:'short', year:'numeric'});
-  loadDB();
-  renderAll();
-  renderSidebar('dashboard');
-}
-
-init();
+/* INIT */
+loadState();
+renderAll();
 </script>
-
 </body>
 </html>
